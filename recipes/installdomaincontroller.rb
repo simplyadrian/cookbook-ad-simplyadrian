@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nativex-ad
+# Cookbook Name:: ad-nativex
 # Recipe:: installdomaincontroller 
 #
 # Copyright 2014, NativeX

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nativex-ad
+# Cookbook Name:: ad-nativex
 # Recipe:: adjoindomain
 #
 # Copyright 2014, NativeX
@@ -13,11 +13,11 @@ node.default[:windows][:allow_pending_reboots] = false
 
 # Join teamfreeze.com domain
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_domain "#{node['nativex-ad']['name']}" do
+nativex_ad_domain "#{node['ad-nativex']['name']}" do
   action :join
   domain_pass ad["ad_password"]
   domain_user ad["ad_username"]
-  oupath "#{node['nativex-ad']['oupath']}"
+  oupath "#{node['ad-nativex']['oupath']}"
 end
 
 # rename computer

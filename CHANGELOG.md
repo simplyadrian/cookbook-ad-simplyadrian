@@ -1,11 +1,11 @@
-nativex-ad CHANGELOG
+ad-nativex CHANGELOG
 ====================
 
-This file is used to list changes made in each version of the nativex-ad cookbook.
+This file is used to list changes made in each version of the ad-nativex cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of nativex-ad
+- [your_name] - Initial release of ad-nativex
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

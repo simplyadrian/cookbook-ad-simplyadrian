@@ -1,4 +1,4 @@
-nativex-ad Cookbook
+ad-nativex Cookbook
 ===================
 This cookbook installs Active Directory Domain Services on Windows 2012 including all necessary roles and features.
 
@@ -19,14 +19,14 @@ Cookbooks
 
 Usage
 ==========
-#### nativex-ad::default
-The nativex-ad::default recipe installs the required roles and features to support a domain controller. 
+#### ad-nativex::default
+The ad-nativex::default recipe installs the required roles and features to support a domain controller. 
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[nativex-ad]"
+    "recipe[ad-nativex]"
   ]
 }
 ```
@@ -55,14 +55,14 @@ Resource/Provider
 ### Examples
 
     # Create Contoso.com forest
-    nativex-ad_domain_controller "contoso.com" do
+    ad-nativex_domain_controller "contoso.com" do
       action :create
       type "forest"
       safe_mode_pass "Passw0rd"
     end
 
     # Create Contoso.com forest with DNS, Win2008 Operational Mode
-    nativex-ad_domain_controller "contoso.com" do
+    ad-nativex_domain_controller "contoso.com" do
       action :create
       type "forest"
       safe_mode_pass "Passw0rd"
@@ -72,20 +72,20 @@ Resource/Provider
     end
 
     # Remove Domain Controller
-    nativex-ad_domain_controller "contoso.com" do
+    ad-nativex_domain_controller "contoso.com" do
       action :delete
       local_pass "Passw0rd"
     end
 
     # Join Contoso.com domain
-    nativex-ad_domain "contoso.com" do
+    ad-nativex_domain "contoso.com" do
       action :join
       domain_pass "Passw0rd"
       domain_user "Administrator"
     end
 
     # Unjoin Contoso.com domain
-    nativex-ad_domain "contoso.com" do
+    ad-nativex_domain "contoso.com" do
       action :unjoin
       domain_pass "Passw0rd"
       domain_user "Administrator"
@@ -111,14 +111,14 @@ Resource/Provider
 ### Examples
 
     # Create computer "workstation1" in the Computers OU
-    nativex-ad_computer "workstation1" do
+    ad-nativex_computer "workstation1" do
       action :create
       domain_name "contoso.com"
       ou "computers"
     end
 
     # Create computer "workstation1" in the Computers OU with description of "Computer"
-    nativex-ad_computer "workstation1" do
+    ad-nativex_computer "workstation1" do
       action :create
       domain_name "contoso.com"
       ou "computers"
@@ -145,7 +145,7 @@ Resource/Provider
 ### Examples
 
     # Create contact "Bob Smith" in the Users OU with firstname "Bob" and lastname "Smith"
-    nativex-ad_contact "Bob Smith" do
+    ad-nativex_contact "Bob Smith" do
       action :create
       domain_name "contoso.com"
       ou "users"
@@ -174,14 +174,14 @@ Resource/Provider
 ### Examples
 
     # Create group "IT" in the Users OU
-    nativex-ad_group "IT" do
+    ad-nativex_group "IT" do
       action :create
       domain_name "contoso.com"
       ou "users"
     end
 
     # Create group "IT" in the Users OU with Description "Information Technology Security Group"
-    nativex-ad_group "IT" do
+    ad-nativex_group "IT" do
       action :create
       domain_name "contoso.com"
       ou "users"
@@ -209,13 +209,13 @@ Resource/Provider
 ### Examples
 
     # Create Organizational Unit "Departments" in the root
-    nativex-ad_ou "Departments" do
+    ad-nativex_ou "Departments" do
       action :create
       domain_name "contoso.com"
     end
 
     # Create Organizational Unit "IT" in the "Department" OUroot
-    nativex-ad_ou "IT" do
+    ad-nativex_ou "IT" do
       action :create
       domain_name "contoso.com"
       ou "Departments"
@@ -241,7 +241,7 @@ Resource/Provider
 ### Examples
 
     # Create user "Joe Smith" in the Users OU
-    nativex-ad_user "Joe Smith" do
+    ad-nativex_user "Joe Smith" do
       action :create
       domain_name "contoso.com"
       ou "users"

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nativex-ad
+# Cookbook Name:: ad-nativex
 # Recipe:: createcomputer 
 #
 # Copyright 2014, NativeX
@@ -11,7 +11,7 @@
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
 nativex_ad_computer node['hostname'] do
   action :create
-  domain_name "#{node['nativex-ad']['name']}"
-  ou "#{node['nativex-ad']['ou']}"
+  domain_name "#{node['ad-nativex']['name']}"
+  ou "#{node['ad-nativex']['ou']}"
   options ({ "desc" => node['fqdn'], "u" => ad["ad_username"], "p" => ad["ad_password"]})
 end

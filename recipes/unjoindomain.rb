@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: nativex-ad
+# Cookbook Name:: ad-nativex
 # Recipe:: unjoindomain
 #
 # Copyright 2014, NativeX
@@ -9,7 +9,7 @@
 
 # Unjoin teamfreeze.com domain
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_domain "#{node['nativex-ad']['name']}" do
+nativex_ad_domain "#{node['ad-nativex']['name']}" do
   action :unjoin
   retries 3
   retry_delay 60
