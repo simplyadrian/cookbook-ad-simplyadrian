@@ -9,7 +9,7 @@
 
 # Unjoin teamfreeze.com domain
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_domain "#{node['ad-nativex']['name']}" do
+ad_nativex_domain "#{node['ad-nativex']['name']}" do
   action :unjoin
   retries 3
   retry_delay 60

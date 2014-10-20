@@ -11,7 +11,7 @@
 
 # Promote to Domain Controller
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_domaincontroller "#{node['ad-nativex']['name']}" do
+ad_nativex_domaincontroller "#{node['ad-nativex']['name']}" do
   action :create
   type "replica" 
   domain_pass ad["ad_password"]

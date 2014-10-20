@@ -13,7 +13,7 @@ node.default[:windows][:allow_pending_reboots] = false
 
 # rename computer
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_rename "#{node.name}" do
+ad_nativex_rename "#{node.name}" do
   action :rename
   domain_pass ad["ad_password"]
   domain_user ad["ad_username"]

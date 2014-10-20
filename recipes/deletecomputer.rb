@@ -9,7 +9,7 @@
 
 # Create computer "workstation1" in the Computers OU with description of "Computer"
 ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
-nativex_ad_computer "#{node.name}" do
+ad_nativex_computer "#{node.name}" do
   action :delete
   domain_name "#{node['ad-nativex']['name']}"
   ou "#{node['ad-nativex']['ou']}"
