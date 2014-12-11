@@ -3,7 +3,18 @@ default['ad-nativex']['name'] = 'teamfreeze.com'
 # OU
 default['ad-nativex']['ou'] = 'Domain Controlers'
 # OUPath
-default['ad-nativex']['oupath'] = '"OU=Domain Controllers,DC=teamfreeze,DC=com"'
+case node['aws']['region']
+when 'us-east-1'
+	then default['pbis-nativex']['ou'] = "OU=Linux,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
+when 'us-west-1'
+	then default['pbis-nativex']['ou'] = "OU=Linux,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
+when 'us-west-2'
+	then default['pbis-nativex']['ou'] = "OU=Linux,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
+when 'Domain Controllers'
+	then default['ad-nativex']['oupath'] = '"OU=Domain Controllers,DC=teamfreeze,DC=com"'
+else
+	puts "Unknown region or OU"
+end
 # Site Name
 default['ad-nativex']['site_name'] = 'AMAZON'
 # Safe Mode Password
