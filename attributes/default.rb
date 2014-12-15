@@ -10,8 +10,6 @@ when 'us-west-1'
 	then default['ad-nativex']['oupath'] = "OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
 when 'us-west-2'
 	then default['ad-nativex']['oupath'] = "OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
-when 'Domain Controllers'
-	then default['ad-nativex']['oupath'] = '"OU=Domain Controllers,DC=teamfreeze,DC=com"'
 else
 	puts "Unknown region or OU"
 end
