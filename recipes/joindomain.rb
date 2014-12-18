@@ -20,7 +20,7 @@ ad_nativex_domain "#{node['ad-nativex']['name']}" do
   action :join
   domain_pass ad["ad_password"]
   domain_user ad["ad_username"]
-  oupath "#{node['ad-nativex']['oupath']}"
+  oupath lazy { "#{node['ad-nativex']['oupath']}" }
 end
 
 # rename computer

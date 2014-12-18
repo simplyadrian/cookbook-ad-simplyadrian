@@ -15,6 +15,7 @@ ruby_block "determine_ec2_region_and_set_ou" do
   block do
     if node['aws']['region']
       node.default['ad-nativex']['oupath'] = "OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
+      Chef::Log.debug("Set ['ad-nativex']['oupath'] to OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com")
     else
       Chef::Log.warn("Undefined AWS region! Cannot automatically set the proper OU.")
     end
