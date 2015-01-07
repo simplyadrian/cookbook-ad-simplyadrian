@@ -1,7 +1,5 @@
 # Domain Name
 default['ad-nativex']['name'] = 'teamfreeze.com'
-# OU
-default['ad-nativex']['ou'] = 'Computer Account'
 # OUPath
 default['ad-nativex']['oupath'] = "OU=Windows,OU=UnknownRegion,OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com"
 # Site Name

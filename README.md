@@ -91,40 +91,6 @@ Resource/Provider
       domain_user "Administrator"
     end
 
-`computer`
---------
-
-### Actions
-- :create: Adds computers to Active Directory
-- :modify: Modifies an existing object of a specific type in the directory.
-- :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
-- :delete:  Remove objects of the specified type from Active Directory.
-
-### Attribute Parameters
-
-- name: name attribute.  Name of the computer object.
-- domain_name: FQDN
-- ou: Organization Unit path where object is located.
-- options: ability to pass additional options
-
-
-### Examples
-
-    # Create computer "workstation1" in the Computers OU
-    ad-nativex_computer "workstation1" do
-      action :create
-      domain_name "contoso.com"
-      ou "computers"
-    end
-
-    # Create computer "workstation1" in the Computers OU with description of "Computer"
-    ad-nativex_computer "workstation1" do
-      action :create
-      domain_name "contoso.com"
-      ou "computers"
-      options ({ "desc" => "computer" })
-    end
-
 `contact`
 ---------
 
