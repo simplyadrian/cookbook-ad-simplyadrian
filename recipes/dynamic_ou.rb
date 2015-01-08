@@ -14,8 +14,25 @@ include_recipe "ohai-nativex::default" if node['cloud']['provider'] == 'ec2'
 ruby_block "determine_ec2_region_and_set_ou" do
   block do
     if node['aws']['region']
-      node.default['ad-nativex']['oupath'] = "'OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com'"
-      Chef::Log.debug("Set ['ad-nativex']['oupath'] to OU=Windows,OU=#{node['aws']['region']},OU=AWS Servers,OU=Computer Accounts,DC=teamfreeze,DC=com")
+      node.default['ad-nativex']['organizational_unit_level_2'] = node['aws']['region']
+      node.default['ad-nativex']['oupath'] = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
+                                              "OU=#{node['ad-nativex']['organizational_unit_level_4']},"\
+                                              "OU=#{node['ad-nativex']['organizational_unit_level_3']},"\
+                                              "OU=#{node['ad-nativex']['organizational_unit_level_2']},"\
+                                              "OU=#{node['ad-nativex']['organizational_unit_level_1']},"\
+                                              "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
+                                              "DC=#{node['ad-nativex']['domain_component_level_1']},"\
+                                              "DC=#{node['ad-nativex']['domain_component_level_0']}'"
+
+      debugStr = "Set ['ad-nativex']['oupath'] to 'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
+                                                  "OU=#{node['ad-nativex']['organizational_unit_level_4']},"\
+                                                  "OU=#{node['ad-nativex']['organizational_unit_level_3']},"\
+                                                  "OU=#{node['ad-nativex']['organizational_unit_level_2']},"\
+                                                  "OU=#{node['ad-nativex']['organizational_unit_level_1']},"\
+                                                  "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
+                                                  "DC=#{node['ad-nativex']['domain_component_level_1']},"\
+                                                  "DC=#{node['ad-nativex']['domain_component_level_0']}'"
+      Chef::Log.debug(debugStr)
     else
       Chef::Log.warn("Undefined AWS region! Cannot automatically set the proper OU.")
     end
