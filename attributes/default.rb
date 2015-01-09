@@ -7,7 +7,7 @@ default['ad-nativex']['organizational_unit_level_0'] = 'Computer Accounts'
 default['ad-nativex']['organizational_unit_level_1'] = 'AWS Servers'
 default['ad-nativex']['organizational_unit_level_2'] = 'UnknownRegion'
 default['ad-nativex']['organizational_unit_level_3'] = 'Windows'
-default['ad-nativex']['organizational_unit_level_4'] = "#{node['environment']}"
+default['ad-nativex']['organizational_unit_level_4'] = "#{node.chef_environment}"
 default['ad-nativex']['organizational_unit_level_5'] = 'One Off Servers'
 # OUPath
 default['ad-nativex']['oupath'] = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
