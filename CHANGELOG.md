@@ -11,6 +11,8 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 -----
 - [Derek Bromenshenkel] - Fixed handling of multiple environments in OU path [ISE-346]
 
+2.0.1
+- [Adrian Herrera] - Removed record provider as it was redundant. Leveraging the "creds" common functionality found in the chef system. [ISE-298]
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
