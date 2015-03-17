@@ -13,6 +13,10 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 
 2.0.1
 - [Adrian Herrera] - Removed record provider as it was redundant. Leveraging the "creds" common functionality found in the chef system. [ISE-298]
+
+2.1.1
+- [Adrian Herrera] - Added rename recipe and removed the rename function from the joindomain recipe. [ISE-323]
+
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
