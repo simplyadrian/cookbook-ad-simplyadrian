@@ -12,11 +12,11 @@ include_recipe 'windows::reboot_handler'
 node.default[:windows][:allow_pending_reboots] = false
 
 # rename computer
-ad = Chef::EncryptedDataBagItem.load("credentials", "ad")
+creds = Chef::EncryptedDataBagItem.load("credentials", "ad")
 ad_nativex_rename "#{node.name}" do
   action :rename
-  domain_pass ad["ad_password"]
-  domain_user ad["ad_username"]
+  domain_pass creds["ad_password"]
+  domain_user creds["ad_username"]
   hostname "#{node.name}"
   notifies :request, 'windows_reboot[60]', :delayed
   not_if {"#{node.name}" == node['hostname']} 
