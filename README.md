@@ -1,6 +1,7 @@
 ad-nativex Cookbook
 ===================
 This cookbook installs Active Directory Domain Services on Windows 2012 including all necessary roles and features.
+This cookbook is also reposible for joining Windows and Linux machines to the specified domain.
 
 Requirements
 ============
@@ -8,6 +9,7 @@ Requirements
 Platform
 --------
 
+* CentOS 6.6 and 7
 * Windows Server 2008 R2 (features only)
 * Windows Server 2012 Family
 
@@ -50,7 +52,9 @@ Resource/Provider
 - safe_mode_pass: safe mode administrative password.
 - domain_user: User account to join the domain.
 - domain_pass: User password to join the domain.
-- options: additional options as needed by AD DS Deployment Cmdlets http://technet.microsoft.com/en-us/library/hh974719.aspx.  Single parameters use nil for key value, see example below.
+- options: additional options as needed by AD DS Deployment Cmdlets
+    http://technet.microsoft.com/en-us/library/hh974719.aspx.
+    Single parameters use nil for key value, see example below.
 
 ### Examples
 
@@ -223,4 +227,4 @@ Resource/Provider
 
 ===================
 
-Authors:: Derek Groh && Adrian Herrera
+Authors:: Adrian Herrera, Derek Bromenshenkel, Jesse Hauf
