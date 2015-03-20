@@ -10,6 +10,9 @@ filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
 
 [domain/LDAP]
 auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
+<% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'krb5' %>
+krb5_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
+<% end %>
 chpass_provider = <%= node['ad-nativex']['sssd_ldap']['chpass_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>sudo_provider = <%= node['ad-nativex']['sssd_ldap']['sudo_provider'] %><% end %>
 id_provider = <%= node['ad-nativex']['sssd_ldap']['id_provider'] %>
@@ -27,6 +30,7 @@ ldap_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_search_base'] %>
 ldap_user_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_user_search_base'] %>
 ldap_user_object_class = <%= node['ad-nativex']['sssd_ldap']['ldap_user_object_class'] %>
 ldap_user_name = <%= node['ad-nativex']['sssd_ldap']['ldap_user_name'] %>
+ldap_id_mapping = <%= node['ad-nativex']['sssd_ldap']['ldap_id_mapping'] %>
 <% if node['ad-nativex']['sssd_ldap']['override_homedir'] %>
 override_homedir = <%= node['ad-nativex']['sssd_ldap']['override_homedir'] %>
 <% end %>
@@ -41,6 +45,13 @@ ldap_group_object_class = <%= node['ad-nativex']['sssd_ldap']['ldap_group_object
 <% if node['ad-nativex']['sssd_ldap']['ldap_access_filter'] %>
 access_provider = <%= node['ad-nativex']['sssd_ldap']['access_provider'] %>
 ldap_access_filter = <%= node['ad-nativex']['sssd_ldap']['ldap_access_filter'] %>
+<% end %>
+
+<% if node['ad-nativex']['sssd_ldap']['dyndns_update'] %>
+dyndns_update = <%= node['ad-nativex']['sssd_ldap']['dyndns_update'] %>
+dyndns_refresh_interval = <%= node['ad-nativex']['sssd_ldap']['dyndns_refresh_interval'] %>
+dyndns_update_ptr = <%= node['ad-nativex']['sssd_ldap']['dyndns_update_ptr'] %>
+dyndns_ttl = <%= node['ad-nativex']['sssd_ldap']['dyndns_ttl'] %>
 <% end %>
 
 min_id = <%= node['ad-nativex']['sssd_ldap']['min_id'] %>
