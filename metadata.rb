@@ -9,5 +9,4 @@ supports         'windows', ">= 6.2"
 
 depends		 "windows"
 depends		 "ohai-nativex"
-depends    "sssd_ldap"
 depends    "chef-sugar"

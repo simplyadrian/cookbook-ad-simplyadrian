@@ -14,7 +14,7 @@ domain = node['ad-nativex']['name']
 
 if centos?
 
-  include_recipe 'sssd_ldap::default'
+  include_recipe 'ad-nativex::sssd_ldap'
 
   package 'adcli' do
     :install
@@ -24,9 +24,9 @@ if centos?
     source 'krb5.conf.erb'
     action :create
     variables({
-                  :krb5_domain => domain,
-                  :krb5_kdc_servers => node['ad-nativex']['kdc_servers']
-              })
+      :krb5_domain => domain,
+      :krb5_kdc_servers => node['ad-nativex']['kdc_servers']
+    })
   end
 
   ruby_block "Joining the #{domain} domain" do

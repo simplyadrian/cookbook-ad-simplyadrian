@@ -3,9 +3,10 @@ ad-nativex CHANGELOG
 
 This file is used to list changes made in each version of the ad-nativex cookbook.
 
-2.5.0
+2.2.0
 -----
-- [Jesse Hauf] - Added linux support, specifically CentOS
+- [Jesse Hauf] - Added linux support, specifically CentOS. Installs and configures adcli and krb5
+- [Jesse Hauf] - Added sssd_ldap recipe and attribute parameters to configure SSSD
 
 2.1.1
 -----
@@ -13,7 +14,8 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 
 2.0.1
 -----
-- [Adrian Herrera] - Removed record provider as it was redundant. Leveraging the "creds" common functionality found in the chef system. [ISE-298]
+- [Adrian Herrera] - Removed record provider as it was redundant. Leveraging the "creds" common functionality found in
+    the chef system. [ISE-298]
 
 1.0.1
 -----
@@ -26,4 +28,5 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
-The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
+The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences
+between markdown on github and standard markdown.

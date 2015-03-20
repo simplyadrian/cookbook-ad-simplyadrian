@@ -18,17 +18,30 @@ Cookbooks
 
 - Windows - Official windows cookbook from opscode https://github.com/opscode-cookbooks/windows.git
 - Powershell - Official powershell cookbook from opscode https://github.com/opscode-cookbooks/powershell.git
+- chef-sugar - Official chef-sugar cookbook from sethvargo https://github.com/sethvargo/chef-sugar.git
 
 Usage
 ==========
 #### ad-nativex::default
-The ad-nativex::default recipe installs the required roles and features to support a domain controller. 
+The ad-nativex::default recipe will add a supported Linux or Windows platform to the domain.
 
 ```json
 {
   "name":"my_node",
   "run_list": [
     "recipe[ad-nativex]"
+  ]
+}
+```
+
+#### ad-nativex::installdomaincontroller
+The ad-nativex::installdomaincontroller recipe installs the required roles and features to support a domain controller.
+
+```json
+{
+  "name":"my_node",
+  "run_list": [
+    "recipe[ad-nativex::installdomaincontroller]"
   ]
 }
 ```
@@ -225,6 +238,65 @@ Resource/Provider
            })
     end
 
-===================
+Recipes
+=======
 
-Authors:: Adrian Herrera, Derek Bromenshenkel, Jesse Hauf
+#### sssd_ldap
+This recipe is based of of tas50's cookbook "sssd_ldap" found at https://github.com/tas50/chef-sssd_ldap.git
+It has been modified to include additional options for Nativex. sssd_ldap installs and configures SSSD for LDAP
+authentication.
+
+Attribute Parameters
+----------
+| Attribute | Value | Comment |
+| -------------  | -------------  | -------------  |
+| ['id_provider'] | 'ldap' | |
+| ['auth_provider'] | 'ldap' | |
+| ['chpass_provider'] | 'ldap' | |
+| ['sudo_provider'] | 'ldap' | |
+| ['enumerate'] | 'true' | |
+| ['cache_credentials'] | 'false' | |
+| ['ldap_schema'] | 'rfc2307bis' | |
+| ['ldap_uri'] | 'ldap://something.yourcompany.com' | |
+| ['ldap_search_base'] | 'dc=yourcompany,dc=com' | |
+| ['ldap_user_search_base'] | 'ou=People,dc=yourcompany,dc=com' | |
+| ['ldap_user_object_class'] | 'posixAccount' | |
+| ['ldap_user_name'] | 'uid' | |
+| ['override_homedir'] | nil | |
+| ['shell_fallback'] | '/bin/bash' | |
+| ['ldap_group_search_base'] | 'ou=Groups,dc=yourcompany,dc=com' | |
+| ['ldap_group_object_class'] | 'posixGroup' | |
+| ['ldap_id_use_start_tls'] | 'true' | |
+| ['ldap_tls_reqcert'] | 'never' | |
+| ['ldap_tls_cacert'] | '/etc/pki/tls/certs/ca-bundle.crt' or '/etc/ssl/certs/ca-certificates.crt' | defaults for RHEL and others respectively |
+| ['ldap_default_bind_dn'] | 'cn=bindaccount,dc=yourcompany,dc=com' | if you have a domain that doesn't require binding set this attributes to nil
+| ['ldap_default_authtok'] | 'bind_password' | if you have a domain that doesn't require binding set this to nil |
+| ['authconfig_params'] | '--enablesssd --enablesssdauth --enablelocauthorize --update' | |
+| ['access_provider'] | nil | Should be set to 'ldap' |
+| ['ldap_access_filter'] | nil| Can use simple LDAP filter such as 'uid=abc123' or more expressive LDAP filters like '(&(objectClass=employee)(department=ITSupport))' |
+| ['min_id'] | '1' | default, used to ignore lower uid/gid's |
+| ['max_id'] | '0' | default, used to ignore higher uid/gid's |
+| ['ldap_sudo'] | false | Adds ldap enabled sudoers (true/false) |
+
+CA Certificates
+---------------
+
+If you manage your own CA then the easiest way to inject the certificate for system-wide use is as follows:
+
+### RHEL
+
+    cp ca.crt /etc/pki/ca-trust/source/anchors
+    update-ca-trust enable
+    update-ca-trust extract
+
+### Debian
+
+    cp ca.crt /usr/local/share/ca-certificates
+    update-ca-certificates
+
+License and Authors
+-------------------
+
+Authors:: Adrian Herrera, Derek Bromenshenkel, Jesse Hauf, Tim Smith (sssd_ldap)
+
+License:: Apache 2.0

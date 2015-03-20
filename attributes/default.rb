@@ -31,3 +31,8 @@ default['sssd_ldap']['ldap_default_bind_dn'] = nil
 default['sssd_ldap']['ldap_default_authtok'] = nil
 # Kerberos Key Distribution Center (KDC) servers. In a standard Windows domain, typically these are your DCs
 default['ad-nativex']['kdc_servers'] = []
+# Dynamic DNS SSSD config
+default['ad-nativex']['dyndns_update'] = true
+default['ad-nativex']['dyndns_refresh_interval'] = 43200
+default['ad-nativex']['dyndns_update_ptr'] = true
+default['ad-nativex']['dyndns_ttl'] = 3600
