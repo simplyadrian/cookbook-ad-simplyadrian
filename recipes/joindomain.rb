@@ -14,11 +14,7 @@ domain = node['ad-nativex']['name']
 
 if centos?
 
-  include_recipe 'ad-nativex::sssd_ldap'
-
-  package 'adcli' do
-    :install
-  end
+  package 'adcli'
 
   template '/etc/krb5.conf' do
     source 'krb5.conf.erb'
@@ -35,7 +31,7 @@ if centos?
       if domain_info.include? domain
         cmd = "echo -n #{creds['ad_password']} | adcli join --domain=#{domain} "\
           "--login-user=#{creds['ad_username'].split('@')[0]}@#{domain.upcase} "\
-          "--stdin-password --domain-ou=#{node['ad-nativex']['oupath']} --show-details"
+          "--stdin-password --domain-ou=\"#{node['ad-nativex']['oupath']}\" --show-details"
         join_domain = `#{cmd}`
         Chef::Log.info(join_domain)
       else
@@ -47,7 +43,12 @@ if centos?
     not_if { `klist -k | head`.include? domain.upcase }
   end
 
-  #include 'policy-nativex'
+  package 'oddjob-mkhomedir'
+  service 'oddjobd' do
+    action [:enable, :start]
+  end
+
+  include_recipe 'ad-nativex::sssd_ldap'
 
 elsif windows?
 

@@ -1,17 +1,19 @@
 [sssd]
 config_file_version = 2
-services = nss, pam<% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>, sudo<% end %>
-domains = LDAP
+services = nss, pam, ssh, autofs<% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>, sudo<% end %>
+domains = <%= node['ad-nativex']['name'].upcase %>
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
 
 [nss]
 filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
 
 [pam]
 
-[domain/LDAP]
+[domain/<%= node['ad-nativex']['name'].upcase %>]
 auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'krb5' %>
 krb5_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
+krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(",") %>
 <% end %>
 chpass_provider = <%= node['ad-nativex']['sssd_ldap']['chpass_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>sudo_provider = <%= node['ad-nativex']['sssd_ldap']['sudo_provider'] %><% end %>
@@ -53,6 +55,8 @@ dyndns_refresh_interval = <%= node['ad-nativex']['sssd_ldap']['dyndns_refresh_in
 dyndns_update_ptr = <%= node['ad-nativex']['sssd_ldap']['dyndns_update_ptr'] %>
 dyndns_ttl = <%= node['ad-nativex']['sssd_ldap']['dyndns_ttl'] %>
 <% end %>
+
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
 
 min_id = <%= node['ad-nativex']['sssd_ldap']['min_id'] %>
 max_id = <%= node['ad-nativex']['sssd_ldap']['max_id'] %>
