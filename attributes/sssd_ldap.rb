@@ -11,7 +11,7 @@ default['ad-nativex']['sssd_ldap']['ldap_search_base'] = 'dc=yourcompany,dc=com'
 default['ad-nativex']['sssd_ldap']['ldap_user_search_base'] = 'ou=People,dc=yourcompany,dc=com'
 default['ad-nativex']['sssd_ldap']['ldap_user_object_class'] = 'user'
 default['ad-nativex']['sssd_ldap']['ldap_user_name'] = 'sAMAccountName'
-default['ad-nativex']['sssd_ldap']['ldap_id_mapping'] = true # Set to false to use POSIX attributes
+default['ad-nativex']['sssd_ldap']['ldap_id_mapping'] = true # Set to false to use POSIX attributes on the AD side
 default['ad-nativex']['sssd_ldap']['override_homedir'] = nil
 default['ad-nativex']['sssd_ldap']['shell_fallback'] = '/bin/bash'
 

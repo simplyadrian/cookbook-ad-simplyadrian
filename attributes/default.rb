@@ -7,7 +7,7 @@ default['ad-nativex']['organizational_unit_level_0'] = 'Computer Accounts'
 default['ad-nativex']['organizational_unit_level_1'] = 'AWS Servers'
 default['ad-nativex']['organizational_unit_level_2'] = 'UnknownRegion'
 default['ad-nativex']['organizational_unit_level_3'] = (node['platform_family'] == 'windows' ? 'Windows' : 'Linux')
-default['ad-nativex']['organizational_unit_level_4'] = "#{node.chef_environment.split('-').last}"
+default['ad-nativex']['organizational_unit_level_4'] = 'Dev' # TODO: was "#{node.chef_environment.split('-').last}"
 default['ad-nativex']['organizational_unit_level_5'] = 'One Off Servers'
 # OUPath
 default['ad-nativex']['oupath'] = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\

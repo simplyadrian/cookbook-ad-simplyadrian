@@ -8,7 +8,7 @@
 #
 
 # If we're in EC2, then need to dynamically determine the the OU based on region
-include_recipe 'ad-nativex::dynamic_ou' if node['cloud']['provider'] == 'ec2' # TODO: Dynamic OU should support instances outside of ec2
+include_recipe 'ad-nativex::dynamic_ou'
 creds = Chef::EncryptedDataBagItem.load("credentials", "ad")
 domain = node['ad-nativex']['name']
 
@@ -16,6 +16,7 @@ if centos?
 
   package 'adcli'
 
+  # Configure Kerberos
   template '/etc/krb5.conf' do
     source 'krb5.conf.erb'
     action :create
@@ -25,6 +26,7 @@ if centos?
     })
   end
 
+  # And machine to domain
   ruby_block "Joining the #{domain} domain" do
     block do
       domain_info = `adcli info #{domain}`
@@ -43,11 +45,13 @@ if centos?
     not_if { `klist -k | head`.include? domain.upcase }
   end
 
+  # Enable create home directory on logon
   package 'oddjob-mkhomedir'
   service 'oddjobd' do
     action [:enable, :start]
   end
 
+  # Configure SSSD
   include_recipe 'ad-nativex::sssd_ldap'
 
 elsif windows?
