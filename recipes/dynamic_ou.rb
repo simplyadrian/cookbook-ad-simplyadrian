@@ -16,14 +16,14 @@ if node['cloud']['provider'] == 'ec2'
     block do
       if node['aws']['region']
         node.default['ad-nativex']['organizational_unit_level_2'] = node['aws']['region'].upcase
-        oupath = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
+        oupath = "OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
                     "OU=#{node['ad-nativex']['organizational_unit_level_4']},"\
                     "OU=#{node['ad-nativex']['organizational_unit_level_3']},"\
                     "OU=#{node['ad-nativex']['organizational_unit_level_2']},"\
                     "OU=#{node['ad-nativex']['organizational_unit_level_1']},"\
                     "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
                     "DC=#{node['ad-nativex']['domain_component_level_1']},"\
-                    "DC=#{node['ad-nativex']['domain_component_level_0']}'"
+                    "DC=#{node['ad-nativex']['domain_component_level_0']}"
         node.default['ad-nativex']['oupath'] = oupath
         Chef::Log.info("Set ['ad-nativex']['oupath'] to #{oupath}")
         oupath_tofile = `echo "#{oupath}" > /tmp/oupath`
