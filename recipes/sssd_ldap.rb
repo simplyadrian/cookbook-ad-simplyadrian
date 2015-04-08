@@ -3,16 +3,15 @@
 # Recipe:: sssd_ldap
 #
 # Copyright 2013-2014, Limelight Networks, Inc.
-# Used under the Apache License, Version 2.0. Modified for NativeX
+# Used under the Apache License, Version 2.0. Modified for NativeX, 2015
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 # Original works: https://github.com/tas50/chef-sssd_ldap
 #
 
-package 'sssd' do
-  action :install
-end
+package 'sssd'
+package 'pam_krb5'
 
 package 'libsss-sudo' do
   package_name value_for_platform(
@@ -27,10 +26,8 @@ end
 # Only run on RHEL
 if platform_family?('rhel')
 
-  # authconfig allows cli based intelligent manipulation of the pam.d files
-  package 'authconfig' do
-    action :install
-  end
+  # authconfig automatically updates pam configuration files with the correct values
+  package 'authconfig'
 
   # https://bugzilla.redhat.com/show_bug.cgi?id=975082
   ruby_block 'nsswitch sudoers' do
@@ -60,7 +57,8 @@ if platform_family?('rhel')
   end
 end
 
-# sssd automatically modifies the PAM files with pam-auth-update and /etc/nsswitch.conf, so all that's left is to configure /etc/sssd/sssd.conf
+# sssd automatically modifies the PAM files with pam-auth-update and /etc/nsswitch.conf, so all that's left is to
+# configure /etc/sssd/sssd.conf
 template '/etc/sssd/sssd.conf' do
   source 'sssd.conf.erb'
   owner 'root'

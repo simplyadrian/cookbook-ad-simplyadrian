@@ -250,33 +250,41 @@ Attribute Parameters
 ----------
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
+| ['authconfig_params'] | '--enablesssd --enablesssdauth --enablelocauthorize --enablemkhomedir --enablekrb5 --update' | authconfig parameters for automatically modifying PAM configuration files |
+| ['pam_reconnection_retries'] | 3 | Connection attempts during PAM authentication |
 | ['id_provider'] | 'ldap' | |
-| ['auth_provider'] | 'ldap' | |
-| ['chpass_provider'] | 'ldap' | |
+| ['auth_provider'] | 'krb5' | |
+| ['chpass_provider'] | 'krb5' | |
 | ['sudo_provider'] | 'ldap' | |
 | ['enumerate'] | 'true' | |
-| ['cache_credentials'] | 'false' | |
+| ['cache_credentials'] | 'true' | |
 | ['ldap_schema'] | 'rfc2307bis' | |
 | ['ldap_uri'] | 'ldap://something.yourcompany.com' | |
 | ['ldap_search_base'] | 'dc=yourcompany,dc=com' | |
 | ['ldap_user_search_base'] | 'ou=People,dc=yourcompany,dc=com' | |
-| ['ldap_user_object_class'] | 'posixAccount' | |
-| ['ldap_user_name'] | 'uid' | |
+| ['ldap_user_object_class'] | 'user' | |
+| ['ldap_user_name'] | 'sAMAccountName' | |
+| ['ldap_id_mapping'] | true | Set to false to use POSIX attributes on the AD |
 | ['override_homedir'] | nil | |
 | ['shell_fallback'] | '/bin/bash' | |
 | ['ldap_group_search_base'] | 'ou=Groups,dc=yourcompany,dc=com' | |
-| ['ldap_group_object_class'] | 'posixGroup' | |
+| ['ldap_group_object_class'] | 'group' | |
 | ['ldap_id_use_start_tls'] | 'true' | |
+| ['ldap_force_upper_case_realm'] | 'true' | Forces automatic upcase of realm |
 | ['ldap_tls_reqcert'] | 'never' | |
 | ['ldap_tls_cacert'] | '/etc/pki/tls/certs/ca-bundle.crt' or '/etc/ssl/certs/ca-certificates.crt' | defaults for RHEL and others respectively |
 | ['ldap_default_bind_dn'] | 'cn=bindaccount,dc=yourcompany,dc=com' | if you have a domain that doesn't require binding set this attributes to nil
 | ['ldap_default_authtok'] | 'bind_password' | if you have a domain that doesn't require binding set this to nil |
-| ['authconfig_params'] | '--enablesssd --enablesssdauth --enablelocauthorize --update' | |
 | ['access_provider'] | nil | Should be set to 'ldap' |
 | ['ldap_access_filter'] | nil| Can use simple LDAP filter such as 'uid=abc123' or more expressive LDAP filters like '(&(objectClass=employee)(department=ITSupport))' |
+| ['dyndns_update'] | 'true' | Set to true to enable dynamic DNS updates |
+| ['dyndns_refresh_interval'] | '43200' | Frequency in seconds to refresh DNS record |
+| ['dyndns_update_ptr'] | 'true' | Set to true to also update DNS pointer record |
+| ['dyndns_ttl'] | '3600' | Time to live in seconds |
 | ['min_id'] | '1' | default, used to ignore lower uid/gid's |
 | ['max_id'] | '0' | default, used to ignore higher uid/gid's |
 | ['ldap_sudo'] | false | Adds ldap enabled sudoers (true/false) |
+| ['debug_level'] | 0 | (Valid values 1-10) Enables debug entries in /var/log/sssd/* |
 
 CA Certificates
 ---------------

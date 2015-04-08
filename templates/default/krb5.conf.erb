@@ -5,8 +5,8 @@
 
 [libdefaults]
  default_realm = <%= @krb5_domain.upcase %>
- dns_lookup_realm = true
- dns_lookup_kdc = true
+ dns_lookup_realm = <%= node['ad-nativex']['krb5']['dns_lookup'] %>
+ dns_lookup_kdc = <%= node['ad-nativex']['krb5']['dns_lookup'] %>
  ticket_lifetime = 24h
  renew_lifetime = 7d
  forwardable = true

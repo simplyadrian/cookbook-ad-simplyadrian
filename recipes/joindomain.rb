@@ -26,7 +26,7 @@ if centos?
     })
   end
 
-  # And machine to domain
+  # Add machine to domain
   ruby_block "Joining the #{domain} domain" do
     block do
       domain_info = `adcli info #{domain}`

@@ -5,15 +5,17 @@ domains = <%= node['ad-nativex']['name'].upcase %>
 debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
 
 [nss]
-filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
+#filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
 
 [pam]
+reconnection_retries = <%= node['ad-nativex']['sssd_ldap']['pam_reconnection_retries'] %>
 
 [domain/<%= node['ad-nativex']['name'].upcase %>]
 auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'krb5' %>
 krb5_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
-krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(",") %>
+krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(".#{node['ad-nativex']['krb5']['krb5_realm']},") %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
+krb5_kpasswd = <%= node['ad-nativex']['krb5']['kdc_servers'].first %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
 <% end %>
 chpass_provider = <%= node['ad-nativex']['sssd_ldap']['chpass_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>sudo_provider = <%= node['ad-nativex']['sssd_ldap']['sudo_provider'] %><% end %>
@@ -27,6 +29,7 @@ ldap_uri = <%= node['ad-nativex']['sssd_ldap']['ldap_uri'] %>
 ldap_tls_reqcert = <%= node['ad-nativex']['sssd_ldap']['ldap_tls_reqcert'] %>
 ldap_tls_cacert = <%= node['ad-nativex']['sssd_ldap']['ldap_tls_cacert'] %>
 ldap_id_use_start_tls = <%= node['ad-nativex']['sssd_ldap']['ldap_id_use_start_tls'] %>
+ldap_force_upper_case_realm = <%= node['ad-nativex']['sssd_ldap']['ldap_force_upper_case_realm'] %>
 
 ldap_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_search_base'] %>
 ldap_user_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_user_search_base'] %>
