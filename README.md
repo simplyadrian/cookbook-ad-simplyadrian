@@ -4,24 +4,22 @@ This cookbook installs Active Directory Domain Services on Windows 2012 includin
 This cookbook is also responsible for joining Windows and Linux machines to the specified domain.
 
 Requirements
-============
+------------
 
-Platform
---------
+### Platform
 
 * CentOS 6.6 and 7
 * Windows Server 2008 R2 (features only)
 * Windows Server 2012 Family
 
-Cookbooks
----------
+### Cookbooks
 
 - Windows - Official windows cookbook from opscode https://github.com/opscode-cookbooks/windows.git
 - ohai-nativex - Ohai cookbook from NativeX https://github.com/nativex/cookbook-ohai-nativex
 - chef-sugar - Official chef-sugar cookbook from sethvargo https://github.com/sethvargo/chef-sugar.git
 
 Usage
-==========
+-----
 #### ad-nativex::default
 The ad-nativex::default recipe will add a supported Linux or Windows platform to the domain.
 
@@ -52,13 +50,13 @@ Resource/Provider
 `domain`
 --------
 
-### Actions
+#### Actions
 - :create: Installs a forest, domain, or domain controller
 - :delete: Removes a domain controller from domain
 - :join: Joins computer to domain
 - :unjoin: Removes computer from domain
 
-### Attribute Parameters
+#### Attribute Parameters
 
 - name: name attribute.  Name of the forest/domain to operate against.
 - type: type of install. Valid values: forest, domain, read-only.
@@ -69,7 +67,7 @@ Resource/Provider
     http://technet.microsoft.com/en-us/library/hh974719.aspx.
     Single parameters use nil for key value, see example below.
 
-### Examples
+#### Examples
 
     # Create Contoso.com forest
     ad-nativex_domain_controller "contoso.com" do
@@ -111,13 +109,13 @@ Resource/Provider
 `contact`
 ---------
 
-### Actions
+#### Actions
 - :create: Adds computers to Active Directory
 - :modify: Modifies an existing object of a specific type in the directory.
 - :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
 - :delete:  Remove objects of the specified type from Active Directory.
 
-### Attribute Parameters
+#### Attribute Parameters
 
 - name: name attribute.  Name of the computer object.
 - domain_name: FQDN
@@ -125,7 +123,7 @@ Resource/Provider
 - options: ability to pass additional options
 
 
-### Examples
+#### Examples
 
     # Create contact "Bob Smith" in the Users OU with firstname "Bob" and lastname "Smith"
     ad-nativex_contact "Bob Smith" do
@@ -140,13 +138,13 @@ Resource/Provider
 `group`
 -------
 
-### Actions
+#### Actions
 - :create: Adds groups to Active Directory
 - :modify: Modifies an existing object of a specific type in the directory.
 - :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
 - :delete:  Remove objects of the specified type from Active Directory.
 
-### Attribute Parameters
+#### Attribute Parameters
 
 - name: name attribute.  Name of the group object.
 - domain_name: FQDN
@@ -154,7 +152,7 @@ Resource/Provider
 - options: ability to pass additional options
 
 
-### Examples
+#### Examples
 
     # Create group "IT" in the Users OU
     ad-nativex_group "IT" do
@@ -175,13 +173,13 @@ Resource/Provider
 `ou`
 ----
 
-### Actions
+#### Actions
 - :create: Adds organizational units to Active Directory
 - :modify: Modifies an existing object of a specific type in the directory.
 - :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
 - :delete:  Remove objects of the specified type from Active Directory.
 
-### Attribute Parameters
+#### Attribute Parameters
 
 - name: name attribute.  Name of the Organization Unit object.
 - domain_name: FQDN
@@ -189,7 +187,7 @@ Resource/Provider
 - options: ability to pass additional options
 
 
-### Examples
+#### Examples
 
     # Create Organizational Unit "Departments" in the root
     ad-nativex_ou "Departments" do
@@ -207,14 +205,14 @@ Resource/Provider
 `users`
 -------
 
-### Actions
+#### Actions
 - :create: Adds users to Active Directory
 - :modify: Modifies an existing object of a specific type in the directory.
 - :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
 - :delete:  Remove objects of the specified type from Active Directory.
 
 Recipes
-=======
+-------
 
 #### default
 Runs the 'joindomain' recipe.
@@ -243,10 +241,10 @@ authentication.
 #### unjoindomain
 Removes a Windows or Linux computer from the domain.
 
-### Attribute Parameters
+Attribute Parameters
+--------------------
 
-default
-----------
+### default
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
 | ['name'] | teamfreeze.com | AD domain name. |
@@ -257,23 +255,21 @@ default
 | ['ad_username'] | | Account for joining machines to AD domain. |
 | ['ad_password'] | | |
 
-krb5
-----------
+### krb5
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
 | ['kdc_servers'] | [] | Kerberos Key Distibution Center servers (typically your AD domain controllers). |
 | ['krb5_realm'] | node['ad-nativex']['name'].upcase | Kerberos realm (typically your AD domain). |
 | ['dns_lookup'] | false | If set to true, krb5 will search for Kerberos servers automatically. |
 
-krb5
-----------
+### sssd_ldap
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
 | ['authconfig_params'] | '--enablesssd --enablesssdauth --enablelocauthorize --enablemkhomedir --enablekrb5 --update' |
     authconfig parameters for automatically modifying PAM configuration files |
 | ['pam'][:reconnection_retries] | 3 | Connection attempts during PAM authentication. |
-| ['pam'][:offline_credentials_expiration] | 2 | If the authentication provider is offline, specifies for how long to
-                                                allow cached log-ins (in days). This value is measured from the last
+| ['pam'][:offline_credentials_expiration] | 2 | If the authentication provider is offline, specifies for how long to\
+                                                allow cached log-ins (in days). This value is measured from the last\
                                                 successful online log-in. Set to 0 for no limit. |
 | ['pam'][:offline_failed_login_attempts] | 3 | If the authentication provider is offline, specifies how many failed
                                                 log in attempts are allowed. Set to 0 for no limit. |
@@ -350,7 +346,8 @@ krb5
 
 More details on options at: http://linux.die.net/man/5/sssd-ldap and http://linux.die.net/man/5/sssd-ad
 
-### Examples
+Examples
+--------
 
     # Create user "Joe Smith" in the Users OU
     ad-nativex_user "Joe Smith" do
