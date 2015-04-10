@@ -268,79 +268,46 @@ Attribute Parameters
 | ['authconfig_params'] | '--enablesssd --enablesssdauth --enablelocauthorize --enablemkhomedir --enablekrb5 --update' |
     authconfig parameters for automatically modifying PAM configuration files |
 | ['pam'][:reconnection_retries] | 3 | Connection attempts during PAM authentication. |
-| ['pam'][:offline_credentials_expiration] | 2 | If the authentication provider is offline, specifies for how long to\
-                                                allow cached log-ins (in days). This value is measured from the last\
-                                                successful online log-in. Set to 0 for no limit. |
-| ['pam'][:offline_failed_login_attempts] | 3 | If the authentication provider is offline, specifies how many failed
-                                                log in attempts are allowed. Set to 0 for no limit. |
-| ['pam'][:offline_failed_login_delay] | 15 | Specifies the time in minutes after the value of
-                                                offline_failed_login_attempts has been reached before a new log in
-                                                attempt is possible. If set to 0, the user cannot authenticate offline
-                                                if the value of offline_failed_login_attempts has been reached. Only a
-                                                successful online authentication can re-enable offline authentication.
-                                                If not specified, defaults to 5. |
+| ['pam'][:offline_credentials_expiration] | 2 | If the authentication provider is offline, specifies for how long to allow cached log-ins (in days). This value is measured from the last successful online log-in. Set to 0 for no limit. |
+| ['pam'][:offline_failed_login_attempts] | 3 | If the authentication provider is offline, specifies how many failed log in attempts are allowed. Set to 0 for no limit. |
+| ['pam'][:offline_failed_login_delay] | 15 | Specifies the time in minutes after the value of offline_failed_login_attempts has been reached before a new log in attempt is possible. If set to 0, the user cannot authenticate offline if the value of offline_failed_login_attempts has been reached. Only a successful online authentication can re-enable offline authentication. If not specified, defaults to 5. |
 | ['id_provider'] | 'ad' | Valid options 'ad' or 'ldap' |
-| ['auth_provider'] | 'ad' | Sets the authentication provider used for the domain. Typically set the same as
-                                                'id_provider'. Valid options 'ad', 'krb5', or 'ldap'. |
-| ['chpass_provider'] | 'ad' | The provider which should handle change password operations for the domain. Valid options
-                                                'ad', 'krb5', or 'ldap'. Set to 'none' to disallow password changes
-                                                explicitly. |
+| ['auth_provider'] | 'ad' | Sets the authentication provider used for the domain. Typically set the same as 'id_provider'. Valid options 'ad', 'krb5', or 'ldap'. |
+| ['chpass_provider'] | 'ad' | The provider which should handle change password operations for the domain. Valid options 'ad', 'krb5', or 'ldap'. Set to 'none' to disallow password changes explicitly. |
 | ['ldap_sudo'] | false | If set to true, adds and configures ldap enabled sudoers. Must also specify 'sudo_provider' |
 | ['sudo_provider'] | 'ad' | The SUDO provider used for the domain. Valid options 'ad' or 'ldap'. |
-| ['enumerate'] | 'true' | Allows group enumeration with id command. While the first enumeration is running, requests
-                                                for the complete user or group lists may return no results until it
-                                                completes. Set to false for performance increase in larger environments. |
+| ['enumerate'] | 'true' | Allows group enumeration with id command. While the first enumeration is running, requests for the complete user or group lists may return no results until it completes. Set to false for performance increase in larger environments. |
 | ['cache_credentials'] | 'true' | Specifies whether to store user credentials in the local SSSD domain database cache. |
-| ['ldap_schema'] | 'ad' | Specifies the Schema Type in use on the target LDAP server. Depending on the selected schema,
-                                                the default attribute names retrieved from the servers may vary. Valid
-                                                options 'rfc2307b', 'rfc2307bis' (uses common name for groups), or 'ad'. |
-| ['ldap_uri'] | 'ldap://something.yourcompany.com' | Specifies the comma-separated list of URIs of the LDAP servers to
-                                                which SSSD should connect in the order of preference. Format:
-                                                ldap[s]://<host>[:port] |
-| ['ad_server'] | nil | The comma-separated list of IP addresses or hostnames of the AD servers to which SSSD should
-                                                connect in order of preference. |
-| ['ad_backup_server'] | nil | The comma-separated list of backup IP addresses or hostnames of the AD servers to which
-                                                SSSD should connect in order of preference. |
-| ['ad_hostname'] | nil | Optional. May be set on machines where the hostname does not reflect the fully qualified name
-                                                used in the Active Directory domain to identify this host. |
+| ['ldap_schema'] | 'ad' | Specifies the Schema Type in use on the target LDAP server. Depending on the selected schema, the default attribute names retrieved from the servers may vary. Valid options 'rfc2307b', 'rfc2307bis' (uses common name for groups), or 'ad'. |
+| ['ldap_uri'] | 'ldap://something.yourcompany.com' | Specifies the comma-separated list of URIs of the LDAP servers to which SSSD should connect in the order of preference. Format: ldap[s]://<host>[:port] |
+| ['ad_server'] | nil | The comma-separated list of IP addresses or hostnames of the AD servers to which SSSD should connect in order of preference. |
+| ['ad_backup_server'] | nil | The comma-separated list of backup IP addresses or hostnames of the AD servers to which SSSD should connect in order of preference. |
+| ['ad_hostname'] | nil | Optional. May be set on machines where the hostname does not reflect the fully qualified name used in the Active Directory domain to identify this host. |
 | ['ldap_search_base'] | 'dc=yourcompany,dc=com' | The default base DN to use for performing LDAP user operations. |
-| ['ldap_user_search_base'] | 'ou=People,dc=yourcompany,dc=com' | User base DN, search scope and LDAP filter to restrict
-                                                LDAP searches for this attribute type. |
+| ['ldap_user_search_base'] | 'ou=People,dc=yourcompany,dc=com' | User base DN, search scope and LDAP filter to restrict LDAP searches for this attribute type. |
 | ['ldap_user_object_class'] | 'user' | The LDAP object that corresponds to a user. |
 | ['ldap_user_name'] | 'sAMAccountName' | The LDAP attribute that corresponds to the user's login name. |
 | ['ldap_id_mapping'] | true | Set to false to use POSIX attributes on the AD. |
 | ['override_homedir'] | nil | Overrides LDAP attribute for creating users home directory. |
 | ['shell_fallback'] | '/bin/bash' | Fallback if LDAP attribute for shell is not set. |
-| ['ldap_group_search_base'] | 'ou=Groups,dc=yourcompany,dc=com' | Group base DN, search scope and LDAP filter to
-                                                restrict LDAP searches for this attribute type. |
+| ['ldap_group_search_base'] | 'ou=Groups,dc=yourcompany,dc=com' | Group base DN, search scope and LDAP filter to restrict LDAP searches for this attribute type. |
 | ['ldap_group_object_class'] | 'group' | The LDAP object that corresponds to a group. |
 | ['ldap_id_use_start_tls'] | 'true' | Specifies that the id_provider connection must also use tls to protect the channel. |
 | ['ldap_force_upper_case_realm'] | 'true' | Forces automatic upcase of realm name. |
 | ['ldap_tls_reqcert'] | 'never' | Specifies what checks to perform on server certificates in a TLS session, if any. |
-| ['ldap_tls_cacert'] | '/etc/pki/tls/certs/ca-bundle.crt' or '/etc/ssl/certs/ca-certificates.crt' | Defaults for RHEL
-                                                and others respectively. |
-| ['ldap_default_bind_dn'] | 'cn=bindaccount,dc=yourcompany,dc=com' | If you have a domain that doesn't require binding
-                                                set this attributes to nil. |
+| ['ldap_tls_cacert'] | '/etc/pki/tls/certs/ca-bundle.crt' or '/etc/ssl/certs/ca-certificates.crt' | Defaults for RHEL and others respectively. |
+| ['ldap_default_bind_dn'] | 'cn=bindaccount,dc=yourcompany,dc=com' | If you have a domain that doesn't require binding set this attributes to nil. |
 | ['ldap_default_authtok'] | 'bind_password' | If you have a domain that doesn't require binding set this to nil. |
-| ['access_provider'] | 'ad' | If using access_provider = ldap and ldap_access_order = filter (default), this option is
-                                                mandatory. It specifies an LDAP search filter criteria that must be met
-                                                for the user to be granted access on this host. |
-| ['ldap_access_filter'] | nil| If 'access_provider' is specified, can use simple LDAP filter such as 'uid=abc123'
-                                                or more expressive LDAP filters like
-                                                '(&(objectClass=employee)(department=ITSupport))' |
-| ['ldap_access_order'] | 'expire' | If 'access_provider' is specified, comma separated list of access control options.
-                                                see SSSD man page for filter details. |
-| ['ldap_account_expire_policy'] | 'ad' | If 'access_provider' is specified, with this option a client side evaluation
-                                                of access control attributes can be enabled. |
+| ['access_provider'] | 'ad' | If using access_provider = ldap and ldap_access_order = filter (default), this option is mandatory. It specifies an LDAP search filter criteria that must be met for the user to be granted access on this host. |
+| ['ldap_access_filter'] | nil| If 'access_provider' is specified, can use simple LDAP filter such as 'uid=abc123' or more expressive LDAP filters like '(&(objectClass=employee)(department=ITSupport))' |
+| ['ldap_access_order'] | 'expire' | If 'access_provider' is specified, comma separated list of access control options. see SSSD man page for filter details. |
+| ['ldap_account_expire_policy'] | 'ad' | If 'access_provider' is specified, with this option a client side evaluation of access control attributes can be enabled. |
 | ['dyndns_update'] | 'true' | Set to true to enable dynamic DNS updates. |
 | ['dyndns_refresh_interval'] | '43200' | Frequency in seconds to refresh DNS record. |
 | ['dyndns_update_ptr'] | 'true' | Set to true to also update DNS pointer record. |
 | ['dyndns_ttl'] | '3600' | Time to live in seconds |
-| ['min_id'] | '1' | Specifies the UID and GID range for the domain. If a domain contains entries that are outside that
-                                                range, they are ignored. Used to ignore lower uid/gid's. |
-| ['max_id'] | '0' | Specifies the UID and GID range for the domain. If a domain contains entries that are outside that
-                                                range, they are ignored. Used to ignore higher uid/gid's. Set to 0 for
-                                                unlimited. |
+| ['min_id'] | '1' | Specifies the UID and GID range for the domain. If a domain contains entries that are outside that range, they are ignored. Used to ignore lower uid/gid's. |
+| ['max_id'] | '0' | Specifies the UID and GID range for the domain. If a domain contains entries that are outside that range, they are ignored. Used to ignore higher uid/gid's. Set to 0 for unlimited. |
 | ['sbus_timeout'] | 30 | SSSD message bus timeout in seconds. Set to 0 for unlimited. |
 | ['debug_level'] | 0 | (Valid values 1-10) Enables debug entries in /var/log/sssd/*. Set to 0 to disable. |
 
