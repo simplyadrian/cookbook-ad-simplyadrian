@@ -3,10 +3,15 @@ ad-nativex CHANGELOG
 
 This file is used to list changes made in each version of the ad-nativex cookbook.
 
+3.0.0
+-----
+- [Jesse Hauf] - Added linux support, specifically CentOS. Installs and configures adcli, sssd, PAM, and krb5
+- [Jesse Hauf] - Added sssd_ldap recipe and attribute parameters to configure SSSD
+- [Jesse Hauf] - Added support for removing Linux machine from domain
+
 2.2.0
 -----
-- [Jesse Hauf] - Added linux support, specifically CentOS. Installs and configures adcli and krb5
-- [Jesse Hauf] - Added sssd_ldap recipe and attribute parameters to configure SSSD
+- [Adrian Herrera] - Removed the AD credential provider
 
 2.1.1
 -----

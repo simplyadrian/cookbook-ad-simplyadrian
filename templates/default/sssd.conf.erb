@@ -3,12 +3,16 @@ config_file_version = 2
 services = nss, pam, ssh, autofs<% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>, sudo<% end %>
 domains = <%= node['ad-nativex']['name'].upcase %>
 debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
+sbus_timeout = <%= node['ad-nativex']['sssd_ldap']['sbus_timeout'] %>
 
 [nss]
 #filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
 
 [pam]
-reconnection_retries = <%= node['ad-nativex']['sssd_ldap']['pam_reconnection_retries'] %>
+reconnection_retries = <%= node['ad-nativex']['sssd_ldap']['pam'][:reconnection_retries] %>
+offline_credentials_expiration = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_credentials_expiration] %>
+offline_failed_login_attempts = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_failed_login_attempts] %>
+offline_failed_login_delay = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_failed_login_delay] %>
 
 [domain/<%= node['ad-nativex']['name'].upcase %>]
 auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
@@ -16,6 +20,13 @@ auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
 krb5_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
 krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(".#{node['ad-nativex']['krb5']['krb5_realm']},") %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
 krb5_kpasswd = <%= node['ad-nativex']['krb5']['kdc_servers'].first %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
+<% end %>
+<% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'ad' %>
+ad_server = <%= node['ad-nativex']['sssd_ldap']['ad_server'] %>.<%= node['ad-nativex']['name'].upcase %>
+ad_backup_server = <%= node['ad-nativex']['sssd_ldap']['ad_backup_server'] %>.<%= node['ad-nativex']['name'].upcase %>
+<% if node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
+ad_hostname = <%= node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
+<% end %>
 <% end %>
 chpass_provider = <%= node['ad-nativex']['sssd_ldap']['chpass_provider'] %>
 <% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>sudo_provider = <%= node['ad-nativex']['sssd_ldap']['sudo_provider'] %><% end %>
@@ -47,9 +58,13 @@ ldap_group_object_class = <%= node['ad-nativex']['sssd_ldap']['ldap_group_object
 <% if node['ad-nativex']['sssd_ldap']['ldap_default_bind_dn'] %>ldap_default_bind_dn = <%= node['ad-nativex']['sssd_ldap']['ldap_default_bind_dn'] %><% end %>
 <% if node['ad-nativex']['sssd_ldap']['ldap_default_authtok'] %>ldap_default_authtok = <%= node['ad-nativex']['sssd_ldap']['ldap_default_authtok'] %><% end %>
 
-<% if node['ad-nativex']['sssd_ldap']['ldap_access_filter'] %>
+<% if node['ad-nativex']['sssd_ldap']['access_provider'] %>
 access_provider = <%= node['ad-nativex']['sssd_ldap']['access_provider'] %>
+<% unless node['ad-nativex']['sssd_ldap']['ldap_access_filter'].nil? %>
 ldap_access_filter = <%= node['ad-nativex']['sssd_ldap']['ldap_access_filter'] %>
+<% end %>
+ldap_access_order = <%= node['ad-nativex']['sssd_ldap']['ldap_access_order'] %>
+ldap_account_expire_policy = <%= node['ad-nativex']['sssd_ldap']['ldap_account_expire_policy'] %>
 <% end %>
 
 <% if node['ad-nativex']['sssd_ldap']['dyndns_update'] %>
