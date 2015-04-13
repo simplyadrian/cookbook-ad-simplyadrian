@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-# Description:: Using Ohai (ohai-nativex) attributes, determine the OU dynamically based on region, and set the cookbook attribute value.
+# Description:: Using ohai-nativex attributes, determine the OU dynamically based on region and set the cookbook attribute value.
 
 include_recipe "ohai-nativex::default" if node['cloud']['provider'] == 'ec2'
 
@@ -41,6 +41,7 @@ if node['cloud']['provider'] == 'ec2'
 
 else
 
+  # TODO: Remove hardcoded values if cookbook is open sourced.
   ruby_block 'Machine is on-premise determining OU based on hostname' do
     block do
       ou_level_1 = ou_level_2 = ou_level_3 = false
