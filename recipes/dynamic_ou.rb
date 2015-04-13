@@ -24,6 +24,10 @@ if node['cloud']['provider'] == 'ec2'
                     "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
                     "DC=#{node['ad-nativex']['domain_component_level_1']},"\
                     "DC=#{node['ad-nativex']['domain_component_level_0']}"
+        oupath.insert(0, "OU=#{node['ad-nativex']['organizational_unit_level_6']},") unless
+            node['ad-nativex']['organizational_unit_level_6'].nil?
+        oupath.insert(0, "OU=#{node['ad-nativex']['organizational_unit_level_7']},") unless
+            node['ad-nativex']['organizational_unit_level_7'].nil?
         node.default['ad-nativex']['oupath'] = oupath
         Chef::Log.info("Set ['ad-nativex']['oupath'] to #{oupath}")
         oupath_tofile = `echo "#{oupath}" > /tmp/oupath`
