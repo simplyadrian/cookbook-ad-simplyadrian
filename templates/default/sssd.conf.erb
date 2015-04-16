@@ -22,8 +22,10 @@ krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(".#{node['ad-na
 krb5_kpasswd = <%= node['ad-nativex']['krb5']['kdc_servers'].first %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
 <% end %>
 <% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'ad' %>
+<% if node['ad-nativex']['sssd_ldap']['ad_server'] %>
 ad_server = <%= node['ad-nativex']['sssd_ldap']['ad_server'] %>.<%= node['ad-nativex']['name'].upcase %>
 ad_backup_server = <%= node['ad-nativex']['sssd_ldap']['ad_backup_server'] %>.<%= node['ad-nativex']['name'].upcase %>
+<% end %>
 <% if node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
 ad_hostname = <%= node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
 <% end %>

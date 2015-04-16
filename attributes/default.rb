@@ -3,7 +3,6 @@ default['ad-nativex']['name'] = 'teamfreeze.com'
 # OU individual components
 default['ad-nativex']['domain_component_level_0'] = 'com'
 default['ad-nativex']['domain_component_level_1'] = 'teamfreeze'
-default['ad-nativex']['domain_component_level_1'] = nil
 default['ad-nativex']['organizational_unit_level_0'] = 'Computer Accounts'
 default['ad-nativex']['organizational_unit_level_1'] = 'AWS Servers'
 default['ad-nativex']['organizational_unit_level_2'] = 'UnknownRegion'

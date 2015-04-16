@@ -16,8 +16,8 @@ default['ad-nativex']['sssd_ldap']['enumerate'] = true
 
 default['ad-nativex']['sssd_ldap']['ldap_schema'] = 'ad'
 default['ad-nativex']['sssd_ldap']['ldap_uri'] = 'ldap://something.yourcompany.com'
-default['ad-nativex']['sssd_ldap']['ad_server'] = nil
-default['ad-nativex']['sssd_ldap']['ad_backup_server'] = nil
+default['ad-nativex']['sssd_ldap']['ad_server'] = nil # Optional, if not specified sssd, will use DNS for lookup
+default['ad-nativex']['sssd_ldap']['ad_backup_server'] = nil # Optional, ad_server must be specified first
 default['ad-nativex']['sssd_ldap']['ad_hostname'] = nil # Optional
 
 default['ad-nativex']['sssd_ldap']['ldap_tls_reqcert'] = 'never'
@@ -59,7 +59,7 @@ default['ad-nativex']['sssd_ldap']['dyndns_ttl'] = 3600
 default['ad-nativex']['sssd_ldap']['min_id'] = '1'
 default['ad-nativex']['sssd_ldap']['max_id'] = '0'
 default['ad-nativex']['sssd_ldap']['ldap_sudo'] = false
-default['ad-nativex']['sssd_ldap']['sbus_timeout'] = 30 # This does magic stuffs
+default['ad-nativex']['sssd_ldap']['sbus_timeout'] = 30
 
 # Debug
 default['ad-nativex']['sssd_ldap']['debug_level'] = 0

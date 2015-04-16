@@ -211,11 +211,32 @@ Resource/Provider
 - :move:  Rename an object without moving it in the directory tree, or move an object from its current location in the directory to a new location within a single domain controller.
 - :delete:  Remove objects of the specified type from Active Directory.
 
+#### Examples
+
+    # Create user "Joe Smith" in the Users OU
+    ad-nativex_user "Joe Smith" do
+      action :create
+      domain_name "contoso.com"
+      ou "users"
+      options ({ "samid" => "JSmith",
+             "upn" => "JSmith@contoso.com",
+             "fn" => "Joe",
+             "ln" => "Smith",
+             "display" => "Smith, Joe",
+             "disabled" => "no",
+             "pwd" => "Passw0rd"
+           })
+    end
+
+
 Recipes
 -------
 
 #### default
 Runs the 'joindomain' recipe.
+
+#### dynamic_dc
+Dynamically determines proper domain controllers for instance based on its region if they have not already been explicitly set.
 
 #### dynamic_ou
 Dynamically constructs the full OU path when to place machine in when it is joined to an AD domain. Used by the
@@ -255,10 +276,18 @@ Attribute Parameters
 | ['ad_username'] | | Account for joining machines to AD domain. |
 | ['ad_password'] | | |
 
+### domaincontrollers
+| Attribute | Value | Comment |
+| -------------  | -------------  | -------------  |
+| ['us-west-1'] | nil | Optional. Comma separated list of :primary and :backup domain controllers servicing the AWS N.California region. |
+| ['us-west-2'] | nil | Optional. Comma separated list of :primary and :backup domain controllers servicing the Oregon region. |
+| ['us-east-1'] | nil | Optional. Comma separated list of :primary and :backup domain controllers servicing the Virginia region. |
+| ['on-premise'] | nil | Optional. Comma separated list of :primary and :backup domain controllers servicing servers located on-premise |
+
 ### krb5
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
-| ['kdc_servers'] | [] | Kerberos Key Distibution Center servers (typically your AD domain controllers). |
+| ['kdc_servers'] | [] | Kerberos Key Distibution Center servers (typically your AD domain controllers). If not specified, ad_nativex will use dynamic_dc to determine domain controllers to use as KDC servers. |
 | ['krb5_realm'] | node['ad-nativex']['name'].upcase | Kerberos realm (typically your AD domain). |
 | ['dns_lookup'] | false | If set to true, krb5 will search for Kerberos servers automatically. |
 
@@ -280,7 +309,7 @@ Attribute Parameters
 | ['cache_credentials'] | 'true' | Specifies whether to store user credentials in the local SSSD domain database cache. |
 | ['ldap_schema'] | 'ad' | Specifies the Schema Type in use on the target LDAP server. Depending on the selected schema, the default attribute names retrieved from the servers may vary. Valid options 'rfc2307b', 'rfc2307bis' (uses common name for groups), or 'ad'. |
 | ['ldap_uri'] | 'ldap://something.yourcompany.com' | Specifies the comma-separated list of URIs of the LDAP servers to which SSSD should connect in the order of preference. Format: ldap[s]://<host>[:port] |
-| ['ad_server'] | nil | The comma-separated list of IP addresses or hostnames of the AD servers to which SSSD should connect in order of preference. |
+| ['ad_server'] | nil | Only used if matching server is not found in domain_controllers attribute file. The comma-separated list of IP addresses or hostnames of the AD servers to which SSSD should connect in order of preference. Specify "_srv_" as the first server to try to dynamically lookup domain controllers first. If domain_controllers attributes are nil and ad-server is nil, SSSD will use dynamic lookup only. |
 | ['ad_backup_server'] | nil | The comma-separated list of backup IP addresses or hostnames of the AD servers to which SSSD should connect in order of preference. |
 | ['ad_hostname'] | nil | Optional. May be set on machines where the hostname does not reflect the fully qualified name used in the Active Directory domain to identify this host. |
 | ['ldap_search_base'] | 'dc=yourcompany,dc=com' | The default base DN to use for performing LDAP user operations. |
@@ -312,24 +341,6 @@ Attribute Parameters
 | ['debug_level'] | 0 | (Valid values 1-10) Enables debug entries in /var/log/sssd/*. Set to 0 to disable. |
 
 More details on options at: http://linux.die.net/man/5/sssd-ldap and http://linux.die.net/man/5/sssd-ad
-
-Examples
---------
-
-    # Create user "Joe Smith" in the Users OU
-    ad-nativex_user "Joe Smith" do
-      action :create
-      domain_name "contoso.com"
-      ou "users"
-      options ({ "samid" => "JSmith",
-             "upn" => "JSmith@contoso.com",
-             "fn" => "Joe",
-             "ln" => "Smith",
-             "display" => "Smith, Joe",
-             "disabled" => "no",
-             "pwd" => "Passw0rd"
-           })
-    end
 
 CA Certificates
 ---------------

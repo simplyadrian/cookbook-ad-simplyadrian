@@ -16,14 +16,12 @@ if centos?
 
   package 'adcli'
 
+  include_recipe 'ad-nativex::dynamic_dc'
+
   # Configure Kerberos
   template '/etc/krb5.conf' do
     source 'krb5.conf.erb'
     action :create
-    variables({
-      :krb5_domain => domain,
-      :krb5_kdc_servers => node['ad-nativex']['krb5']['kdc_servers']
-    })
   end
 
   # Add machine to domain

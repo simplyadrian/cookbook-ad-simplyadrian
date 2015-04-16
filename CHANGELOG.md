@@ -7,6 +7,8 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 -----
 - [Jesse Hauf] - Added linux support, specifically CentOS. Installs and configures adcli, sssd, PAM, and krb5
 - [Jesse Hauf] - Added sssd_ldap recipe and attribute parameters to configure SSSD
+- [Jesse Hauf] - Added dynamic_dc recipe and attribute parameters dynamically determine proper AD domain controller based on region
+- [Jesse Hauf] - Updated dynamic_ou to support on premise servers
 - [Jesse Hauf] - Added support for removing Linux machine from domain
 
 2.2.0
