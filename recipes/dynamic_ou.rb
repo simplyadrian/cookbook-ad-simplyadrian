@@ -30,8 +30,6 @@ if node['cloud']['provider'] == 'ec2'
             node['ad-nativex']['organizational_unit_level_7'].nil?
         node.default['ad-nativex']['oupath'] = oupath
         Chef::Log.info("Set ['ad-nativex']['oupath'] to #{oupath}")
-        oupath_tofile = `echo "#{oupath}" > /tmp/oupath`
-        oupath_tofile
       else
         Chef::Log.warn('Undefined AWS region! Cannot automatically set the proper OU.')
       end
@@ -75,6 +73,7 @@ else
         ou_level_1 = true
       else
         Chef::Log.warn('Cannot automatically set the proper OU. Using failback OU.')
+        ou_level_2 = false
       end
       oupath = "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
                   "DC=#{node['ad-nativex']['domain_component_level_1']},"\
@@ -82,7 +81,7 @@ else
       oupath.insert(0, "OU=#{node['ad-nativex']['organizational_unit_level_1']},") if ou_level_1
       oupath.insert(0, "OU=#{node['ad-nativex']['organizational_unit_level_2']},") if ou_level_2
       oupath.insert(0, "OU=#{node['ad-nativex']['organizational_unit_level_3']},") if ou_level_3
-      node.default['ad-nativex']['oupath'] = "'#{oupath}'"
+      node.default['ad-nativex']['oupath'] = oupath
       Chef::Log.info("Set ['ad-nativex']['oupath'] to #{oupath}")
     end
     action :run
