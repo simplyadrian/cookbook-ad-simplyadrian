@@ -14,43 +14,49 @@ domain = node['ad-nativex']['name']
 
 if centos?
 
-  package 'adcli'
+  if File.directory?('/etc/pbis')
+    Chef::Log.error('PBIS is installed, skipping adcli/SSSD domain configuration.')
+  else
 
-  include_recipe 'ad-nativex::dynamic_dc'
+    package 'adcli'
 
-  # Configure Kerberos
-  template '/etc/krb5.conf' do
-    source 'krb5.conf.erb'
-    action :create
-  end
+    include_recipe 'ad-nativex::dynamic_dc'
 
-  # Add machine to domain
-  ruby_block "Joining the #{domain} domain" do
-    block do
-      domain_info = `adcli info #{domain}`
-      if domain_info.include? domain
-        cmd = "echo -n #{creds['ad_password']} | adcli join --domain=#{domain} "\
-          "--login-user=#{creds['ad_username'].split('@')[0]}@#{domain.upcase} "\
-          "--stdin-password --domain-ou=\"#{node['ad-nativex']['oupath']}\" --show-details"
-        join_domain = `#{cmd}`
-        Chef::Log.info(join_domain)
-      else
-        Chef::Log.error('Could not find domain')
-        raise
-      end
+    # Configure Kerberos
+    template '/etc/krb5.conf' do
+      source 'krb5.conf.erb'
+      action :create
     end
-    action :run
-    not_if { `klist -k | head`.include? domain.upcase }
-  end
 
-  # Enable create home directory on logon
-  package 'oddjob-mkhomedir'
-  service 'oddjobd' do
-    action [:enable, :start]
-  end
+    # Add machine to domain
+    ruby_block "Joining the #{domain} domain" do
+      block do
+        domain_info = `adcli info #{domain}`
+        if domain_info.include? domain
+          cmd = "echo -n #{creds['ad_password']} | adcli join --domain=#{domain} "\
+            "--login-user=#{creds['ad_username'].split('@')[0]}@#{domain.upcase} "\
+            "--stdin-password --domain-ou=\"#{node['ad-nativex']['oupath']}\" --show-details"
+          join_domain = `#{cmd}`
+          Chef::Log.info(join_domain)
+        else
+          Chef::Log.error('Could not find domain')
+          raise
+        end
+      end
+      action :run
+      not_if { `klist -k | head`.include? domain.upcase }
+    end
 
-  # Configure SSSD
-  include_recipe 'ad-nativex::sssd_ldap'
+    # Enable create home directory on logon
+    package 'oddjob-mkhomedir'
+    service 'oddjobd' do
+      action [:enable, :start]
+    end
+
+    # Configure SSSD
+    include_recipe 'ad-nativex::sssd_ldap'
+
+  end
 
 elsif windows?
 
