@@ -8,9 +8,9 @@
 #
 # Description:: Using ohai-nativex attributes, determine the OU dynamically based on region and set the cookbook attribute value.
 
-include_recipe "ohai-nativex::default" if node['cloud']['provider'] == 'ec2'
+include_recipe "ohai-nativex::default" if ec2?
 
-if node['cloud']['provider'] == 'ec2'
+if ec2?
 
   ruby_block 'Machine is EC2, determine region and OU' do
     block do
