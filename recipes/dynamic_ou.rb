@@ -43,7 +43,7 @@ else
   ruby_block 'Machine is on-premise determining OU based on hostname' do
     block do
       ou_level_1 = ou_level_2 = ou_level_3 = false
-      hostname = node['hostname']
+      hostname = node['hostname'].upcase
       unless windows?
         node.default['ad-nativex']['organizational_unit_level_2'] = 'Linux'
         ou_level_2 = true

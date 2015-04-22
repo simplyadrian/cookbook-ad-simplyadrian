@@ -5,6 +5,9 @@ domains = <%= node['ad-nativex']['name'].upcase %>
 debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
 sbus_timeout = <%= node['ad-nativex']['sssd_ldap']['sbus_timeout'] %>
 
+[autofs]
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
+
 [nss]
 #filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
 
