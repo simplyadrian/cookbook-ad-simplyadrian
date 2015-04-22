@@ -1,0 +1,24 @@
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ default_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
+ dns_lookup_realm = <%= node['ad-nativex']['krb5']['dns_lookup'] %>
+ dns_lookup_kdc = <%= node['ad-nativex']['krb5']['dns_lookup'] %>
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+
+[realms]
+ <%= node['ad-nativex']['krb5']['krb5_realm'] %> = {
+  <% node['ad-nativex']['krb5']['kdc_servers'].each do |server| -%>
+  kdc = <%= server %>.<%= node['ad-nativex']['krb5']['krb5_realm'].downcase %>
+  <% end -%>
+  admin_server = <%= node['ad-nativex']['krb5']['kdc_servers'].first %>.<%= node['ad-nativex']['krb5']['krb5_realm'].downcase %>
+ }
+
+[domain_realm]
+ .<%= node['ad-nativex']['krb5']['krb5_realm'].downcase %> = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
+ <%= node['ad-nativex']['krb5']['krb5_realm'].downcase %> = <%= node['ad-nativex']['krb5']['krb5_realm'] %>

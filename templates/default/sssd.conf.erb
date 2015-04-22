@@ -1,0 +1,85 @@
+[sssd]
+config_file_version = 2
+services = nss, pam, ssh, autofs<% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>, sudo<% end %>
+domains = <%= node['ad-nativex']['name'].upcase %>
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
+sbus_timeout = <%= node['ad-nativex']['sssd_ldap']['sbus_timeout'] %>
+
+[autofs]
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
+
+[nss]
+#filter_users = root,named,avahi,haldaemon,dbus,radiusd,news,nscd
+
+[pam]
+reconnection_retries = <%= node['ad-nativex']['sssd_ldap']['pam'][:reconnection_retries] %>
+offline_credentials_expiration = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_credentials_expiration] %>
+offline_failed_login_attempts = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_failed_login_attempts] %>
+offline_failed_login_delay = <%= node['ad-nativex']['sssd_ldap']['pam'][:offline_failed_login_delay] %>
+
+[domain/<%= node['ad-nativex']['name'].upcase %>]
+auth_provider = <%= node['ad-nativex']['sssd_ldap']['auth_provider'] %>
+<% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'krb5' %>
+krb5_realm = <%= node['ad-nativex']['krb5']['krb5_realm'] %>
+krb5_server = <%= node['ad-nativex']['krb5']['kdc_servers'].join(".#{node['ad-nativex']['krb5']['krb5_realm']},") %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
+krb5_kpasswd = <%= node['ad-nativex']['krb5']['kdc_servers'].first %>.<%= node['ad-nativex']['krb5']['krb5_realm'] %>
+<% end %>
+<% if node['ad-nativex']['sssd_ldap']['auth_provider'] == 'ad' %>
+<% if node['ad-nativex']['sssd_ldap']['ad_server'] %>
+ad_server = <%= node['ad-nativex']['sssd_ldap']['ad_server'] %>.<%= node['ad-nativex']['name'].upcase %>
+ad_backup_server = <%= node['ad-nativex']['sssd_ldap']['ad_backup_server'] %>.<%= node['ad-nativex']['name'].upcase %>
+<% end %>
+<% if node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
+ad_hostname = <%= node['ad-nativex']['sssd_ldap']['ad_hostname'] %>
+<% end %>
+<% end %>
+chpass_provider = <%= node['ad-nativex']['sssd_ldap']['chpass_provider'] %>
+<% if node['ad-nativex']['sssd_ldap']['ldap_sudo'] %>sudo_provider = <%= node['ad-nativex']['sssd_ldap']['sudo_provider'] %><% end %>
+id_provider = <%= node['ad-nativex']['sssd_ldap']['id_provider'] %>
+cache_credentials = <%= node['ad-nativex']['sssd_ldap']['cache_credentials'] %>
+enumerate = <%= node['ad-nativex']['sssd_ldap']['enumerate'] %>
+
+ldap_schema = <%= node['ad-nativex']['sssd_ldap']['ldap_schema'] %>
+ldap_uri = <%= node['ad-nativex']['sssd_ldap']['ldap_uri'] %>
+
+ldap_tls_reqcert = <%= node['ad-nativex']['sssd_ldap']['ldap_tls_reqcert'] %>
+ldap_tls_cacert = <%= node['ad-nativex']['sssd_ldap']['ldap_tls_cacert'] %>
+ldap_id_use_start_tls = <%= node['ad-nativex']['sssd_ldap']['ldap_id_use_start_tls'] %>
+ldap_force_upper_case_realm = <%= node['ad-nativex']['sssd_ldap']['ldap_force_upper_case_realm'] %>
+
+ldap_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_search_base'] %>
+ldap_user_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_user_search_base'] %>
+ldap_user_object_class = <%= node['ad-nativex']['sssd_ldap']['ldap_user_object_class'] %>
+ldap_user_name = <%= node['ad-nativex']['sssd_ldap']['ldap_user_name'] %>
+ldap_id_mapping = <%= node['ad-nativex']['sssd_ldap']['ldap_id_mapping'] %>
+<% if node['ad-nativex']['sssd_ldap']['override_homedir'] %>
+override_homedir = <%= node['ad-nativex']['sssd_ldap']['override_homedir'] %>
+<% end %>
+shell_fallback = <%= node['ad-nativex']['sssd_ldap']['shell_fallback'] %>
+
+ldap_group_search_base = <%= node['ad-nativex']['sssd_ldap']['ldap_group_search_base'] %>
+ldap_group_object_class = <%= node['ad-nativex']['sssd_ldap']['ldap_group_object_class'] %>
+
+<% if node['ad-nativex']['sssd_ldap']['ldap_default_bind_dn'] %>ldap_default_bind_dn = <%= node['ad-nativex']['sssd_ldap']['ldap_default_bind_dn'] %><% end %>
+<% if node['ad-nativex']['sssd_ldap']['ldap_default_authtok'] %>ldap_default_authtok = <%= node['ad-nativex']['sssd_ldap']['ldap_default_authtok'] %><% end %>
+
+<% if node['ad-nativex']['sssd_ldap']['access_provider'] %>
+access_provider = <%= node['ad-nativex']['sssd_ldap']['access_provider'] %>
+<% unless node['ad-nativex']['sssd_ldap']['ldap_access_filter'].nil? %>
+ldap_access_filter = <%= node['ad-nativex']['sssd_ldap']['ldap_access_filter'] %>
+<% end %>
+ldap_access_order = <%= node['ad-nativex']['sssd_ldap']['ldap_access_order'] %>
+ldap_account_expire_policy = <%= node['ad-nativex']['sssd_ldap']['ldap_account_expire_policy'] %>
+<% end %>
+
+<% if node['ad-nativex']['sssd_ldap']['dyndns_update'] %>
+dyndns_update = <%= node['ad-nativex']['sssd_ldap']['dyndns_update'] %>
+dyndns_refresh_interval = <%= node['ad-nativex']['sssd_ldap']['dyndns_refresh_interval'] %>
+dyndns_update_ptr = <%= node['ad-nativex']['sssd_ldap']['dyndns_update_ptr'] %>
+dyndns_ttl = <%= node['ad-nativex']['sssd_ldap']['dyndns_ttl'] %>
+<% end %>
+
+debug_level = <%= node['ad-nativex']['sssd_ldap']['debug_level'] %>
+
+min_id = <%= node['ad-nativex']['sssd_ldap']['min_id'] %>
+max_id = <%= node['ad-nativex']['sssd_ldap']['max_id'] %>

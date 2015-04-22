@@ -6,9 +6,11 @@ default['ad-nativex']['domain_component_level_1'] = 'teamfreeze'
 default['ad-nativex']['organizational_unit_level_0'] = 'Computer Accounts'
 default['ad-nativex']['organizational_unit_level_1'] = 'AWS Servers'
 default['ad-nativex']['organizational_unit_level_2'] = 'UnknownRegion'
-default['ad-nativex']['organizational_unit_level_3'] = 'Windows'
-default['ad-nativex']['organizational_unit_level_4'] = "#{node.chef_environment.split('-').last}"
+default['ad-nativex']['organizational_unit_level_3'] = (node['platform_family'] == 'windows' ? 'Windows' : 'Linux')
+default['ad-nativex']['organizational_unit_level_4'] = "#{node.chef_environment.split('-').last.capitalize}"
 default['ad-nativex']['organizational_unit_level_5'] = 'One Off Servers'
+default['ad-nativex']['organizational_unit_level_6'] = nil
+default['ad-nativex']['organizational_unit_level_7'] = nil
 # OUPath
 default['ad-nativex']['oupath'] = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
                                   "OU=#{node['ad-nativex']['organizational_unit_level_4']},"\
