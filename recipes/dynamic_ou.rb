@@ -60,7 +60,7 @@ else
             ou_level_3 = true
           end
         elsif hostname[0,1] == 'P'
-          if window?
+          if windows?
             node.default['ad-nativex']['organizational_unit_level_2'] = 'Application Servers'
             ou_level_2 = true
           else
