@@ -3,6 +3,10 @@ ad-nativex CHANGELOG
 
 This file is used to list changes made in each version of the ad-nativex cookbook.
 
+3.0.1
+-----
+- [Jesse Hauf] - Fixed bug in dynamic_ou where windows? was spelled window?
+
 3.0.0
 -----
 - [Jesse Hauf] - Added linux support, specifically CentOS. Installs and configures adcli, sssd, PAM, and krb5
