@@ -69,7 +69,7 @@ elsif windows?
     action :join
     domain_pass creds["ad_password"]
     domain_user creds["ad_username"]
-    oupath lazy { "#{node['ad-nativex']['oupath']}" }
+    oupath lazy { "\"#{node['ad-nativex']['oupath']}\"" }
     notifies :request, 'windows_reboot[60]', :delayed
   end
 

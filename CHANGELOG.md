@@ -5,6 +5,10 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 
 3.0.1
 -----
+- [Jesse Hauf] - Fixed with windows ou path
+
+3.0.1
+-----
 - [Jesse Hauf] - Fixed bug in dynamic_ou where windows? was spelled window?
 
 3.0.0
