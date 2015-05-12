@@ -1,7 +1,7 @@
-ad-nativex CHANGELOG
+ad-simplyadrian CHANGELOG
 ====================
 
-This file is used to list changes made in each version of the ad-nativex cookbook.
+This file is used to list changes made in each version of the ad-simplyadrian cookbook.
 
 3.0.1
 -----
@@ -38,7 +38,7 @@ This file is used to list changes made in each version of the ad-nativex cookboo
 
 1.0.0
 -----
-- [NativeX Dev Ops Team] - Initial release of ad-nativex
+- [simplyadrian Dev Ops Team] - Initial release of ad-simplyadrian
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

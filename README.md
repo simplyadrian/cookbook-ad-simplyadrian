@@ -1,4 +1,4 @@
-ad-nativex Cookbook
+ad-simplyadrian Cookbook
 ===================
 This cookbook installs Active Directory Domain Services on Windows 2012 including all necessary roles and features.
 This cookbook is also responsible for joining Windows and Linux machines to the specified domain.
@@ -15,31 +15,31 @@ Requirements
 ### Cookbooks
 
 - Windows - Official windows cookbook from opscode https://github.com/opscode-cookbooks/windows.git
-- ohai-nativex - Ohai cookbook from NativeX https://github.com/nativex/cookbook-ohai-nativex
+- ohai-simplyadrian - Ohai cookbook from simplyadrian https://github.com/simplyadrian/cookbook-ohai-simplyadrian
 - chef-sugar - Official chef-sugar cookbook from sethvargo https://github.com/sethvargo/chef-sugar.git
 
 Usage
 -----
-#### ad-nativex::default
-The ad-nativex::default recipe will add a supported Linux or Windows platform to the domain.
+#### ad-simplyadrian::default
+The ad-simplyadrian::default recipe will add a supported Linux or Windows platform to the domain.
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[ad-nativex]"
+    "recipe[ad-simplyadrian]"
   ]
 }
 ```
 
-#### ad-nativex::installdomaincontroller
-The ad-nativex::installdomaincontroller recipe installs the required roles and features to support a domain controller.
+#### ad-simplyadrian::installdomaincontroller
+The ad-simplyadrian::installdomaincontroller recipe installs the required roles and features to support a domain controller.
 
 ```json
 {
   "name":"my_node",
   "run_list": [
-    "recipe[ad-nativex::installdomaincontroller]"
+    "recipe[ad-simplyadrian::installdomaincontroller]"
   ]
 }
 ```
@@ -70,14 +70,14 @@ Resource/Provider
 #### Examples
 
     # Create Contoso.com forest
-    ad-nativex_domain_controller "contoso.com" do
+    ad-simplyadrian_domain_controller "contoso.com" do
       action :create
       type "forest"
       safe_mode_pass "Passw0rd"
     end
 
     # Create Contoso.com forest with DNS, Win2008 Operational Mode
-    ad-nativex_domain_controller "contoso.com" do
+    ad-simplyadrian_domain_controller "contoso.com" do
       action :create
       type "forest"
       safe_mode_pass "Passw0rd"
@@ -87,20 +87,20 @@ Resource/Provider
     end
 
     # Remove Domain Controller
-    ad-nativex_domain_controller "contoso.com" do
+    ad-simplyadrian_domain_controller "contoso.com" do
       action :delete
       local_pass "Passw0rd"
     end
 
     # Join Contoso.com domain
-    ad-nativex_domain "contoso.com" do
+    ad-simplyadrian_domain "contoso.com" do
       action :join
       domain_pass "Passw0rd"
       domain_user "Administrator"
     end
 
     # Unjoin Contoso.com domain
-    ad-nativex_domain "contoso.com" do
+    ad-simplyadrian_domain "contoso.com" do
       action :unjoin
       domain_pass "Passw0rd"
       domain_user "Administrator"
@@ -126,7 +126,7 @@ Resource/Provider
 #### Examples
 
     # Create contact "Bob Smith" in the Users OU with firstname "Bob" and lastname "Smith"
-    ad-nativex_contact "Bob Smith" do
+    ad-simplyadrian_contact "Bob Smith" do
       action :create
       domain_name "contoso.com"
       ou "users"
@@ -155,14 +155,14 @@ Resource/Provider
 #### Examples
 
     # Create group "IT" in the Users OU
-    ad-nativex_group "IT" do
+    ad-simplyadrian_group "IT" do
       action :create
       domain_name "contoso.com"
       ou "users"
     end
 
     # Create group "IT" in the Users OU with Description "Information Technology Security Group"
-    ad-nativex_group "IT" do
+    ad-simplyadrian_group "IT" do
       action :create
       domain_name "contoso.com"
       ou "users"
@@ -190,13 +190,13 @@ Resource/Provider
 #### Examples
 
     # Create Organizational Unit "Departments" in the root
-    ad-nativex_ou "Departments" do
+    ad-simplyadrian_ou "Departments" do
       action :create
       domain_name "contoso.com"
     end
 
     # Create Organizational Unit "IT" in the "Department" OUroot
-    ad-nativex_ou "IT" do
+    ad-simplyadrian_ou "IT" do
       action :create
       domain_name "contoso.com"
       ou "Departments"
@@ -214,7 +214,7 @@ Resource/Provider
 #### Examples
 
     # Create user "Joe Smith" in the Users OU
-    ad-nativex_user "Joe Smith" do
+    ad-simplyadrian_user "Joe Smith" do
       action :create
       domain_name "contoso.com"
       ou "users"
@@ -256,7 +256,7 @@ Renames a Windows computer.
 
 #### sssd_ldap
 This recipe is based of of tas50's cookbook "sssd_ldap" found at https://github.com/tas50/chef-sssd_ldap.git
-It has been modified to include additional options for Nativex. sssd_ldap installs and configures SSSD for LDAP
+It has been modified to include additional options for simplyadrian. sssd_ldap installs and configures SSSD for LDAP
 authentication.
 
 #### unjoindomain
@@ -268,8 +268,8 @@ Attribute Parameters
 ### default
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
-| ['name'] | teamfreeze.com | AD domain name. |
-| ['domain_component_level_[0-2]'] | 'com', 'teamfreeze', nil | OU path distinguished names. |
+| ['name'] | defaultdomain.com | AD domain name. |
+| ['domain_component_level_[0-2]'] | 'com', 'defaultdomain', nil | OU path distinguished names. |
 | ['organizational_unit_level_[0-7]'] | 'Computer Accounts', 'AWS Servers', 'UnknownRegion', 'Windows' or 'Linux', environment suffix (-*), 'One Off Servers', nil, nil | OU path organizational units |
 | ['site_name'] | AMAZON | |
 | ['safe_mode_pass'] | | |
@@ -287,8 +287,8 @@ Attribute Parameters
 ### krb5
 | Attribute | Value | Comment |
 | -------------  | -------------  | -------------  |
-| ['kdc_servers'] | [] | Kerberos Key Distibution Center servers (typically your AD domain controllers). If not specified, ad_nativex will use dynamic_dc to determine domain controllers to use as KDC servers. |
-| ['krb5_realm'] | node['ad-nativex']['name'].upcase | Kerberos realm (typically your AD domain). |
+| ['kdc_servers'] | [] | Kerberos Key Distibution Center servers (typically your AD domain controllers). If not specified, ad_simplyadrian will use dynamic_dc to determine domain controllers to use as KDC servers. |
+| ['krb5_realm'] | node['ad-simplyadrian']['name'].upcase | Kerberos realm (typically your AD domain). |
 | ['dns_lookup'] | false | If set to true, krb5 will search for Kerberos servers automatically. |
 
 ### sssd_ldap

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: ad-nativex
+# Cookbook Name:: ad-simplyadrian
 # Recipe:: renamecomputer 
 #
-# Copyright 2014, NativeX
+# Copyright 2014, simplyadrian
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -13,7 +13,7 @@ node.default[:windows][:allow_pending_reboots] = false
 
 # rename computer
 creds = Chef::EncryptedDataBagItem.load("credentials", "ad")
-ad_nativex_rename "#{node.name}" do
+ad_simplyadrian_rename "#{node.name}" do
   action :rename
   domain_pass creds["ad_password"]
   domain_user creds["ad_username"]

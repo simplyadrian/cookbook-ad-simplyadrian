@@ -1,30 +1,30 @@
 # Domain Name
-default['ad-nativex']['name'] = 'teamfreeze.com'
+default['ad-simplyadrian']['name'] = 'defaultdomain.com'
 # OU individual components
-default['ad-nativex']['domain_component_level_0'] = 'com'
-default['ad-nativex']['domain_component_level_1'] = 'teamfreeze'
-default['ad-nativex']['organizational_unit_level_0'] = 'Computer Accounts'
-default['ad-nativex']['organizational_unit_level_1'] = 'AWS Servers'
-default['ad-nativex']['organizational_unit_level_2'] = 'UnknownRegion'
-default['ad-nativex']['organizational_unit_level_3'] = (node['platform_family'] == 'windows' ? 'Windows' : 'Linux')
-default['ad-nativex']['organizational_unit_level_4'] = "#{node.chef_environment.split('-').last.capitalize}"
-default['ad-nativex']['organizational_unit_level_5'] = 'One Off Servers'
-default['ad-nativex']['organizational_unit_level_6'] = nil
-default['ad-nativex']['organizational_unit_level_7'] = nil
+default['ad-simplyadrian']['domain_component_level_0'] = 'com'
+default['ad-simplyadrian']['domain_component_level_1'] = 'defaultdomain'
+default['ad-simplyadrian']['organizational_unit_level_0'] = 'Computer Accounts'
+default['ad-simplyadrian']['organizational_unit_level_1'] = 'AWS Servers'
+default['ad-simplyadrian']['organizational_unit_level_2'] = 'UnknownRegion'
+default['ad-simplyadrian']['organizational_unit_level_3'] = (node['platform_family'] == 'windows' ? 'Windows' : 'Linux')
+default['ad-simplyadrian']['organizational_unit_level_4'] = "#{node.chef_environment.split('-').last.capitalize}"
+default['ad-simplyadrian']['organizational_unit_level_5'] = 'One Off Servers'
+default['ad-simplyadrian']['organizational_unit_level_6'] = nil
+default['ad-simplyadrian']['organizational_unit_level_7'] = nil
 # OUPath
-default['ad-nativex']['oupath'] = "'OU=#{node['ad-nativex']['organizational_unit_level_5']},"\
-                                  "OU=#{node['ad-nativex']['organizational_unit_level_4']},"\
-                                  "OU=#{node['ad-nativex']['organizational_unit_level_3']},"\
-                                  "OU=#{node['ad-nativex']['organizational_unit_level_2']},"\
-                                  "OU=#{node['ad-nativex']['organizational_unit_level_1']},"\
-                                  "OU=#{node['ad-nativex']['organizational_unit_level_0']},"\
-                                  "DC=#{node['ad-nativex']['domain_component_level_1']},"\
-                                  "DC=#{node['ad-nativex']['domain_component_level_0']}'"
+default['ad-simplyadrian']['oupath'] = "'OU=#{node['ad-simplyadrian']['organizational_unit_level_5']},"\
+                                  "OU=#{node['ad-simplyadrian']['organizational_unit_level_4']},"\
+                                  "OU=#{node['ad-simplyadrian']['organizational_unit_level_3']},"\
+                                  "OU=#{node['ad-simplyadrian']['organizational_unit_level_2']},"\
+                                  "OU=#{node['ad-simplyadrian']['organizational_unit_level_1']},"\
+                                  "OU=#{node['ad-simplyadrian']['organizational_unit_level_0']},"\
+                                  "DC=#{node['ad-simplyadrian']['domain_component_level_1']},"\
+                                  "DC=#{node['ad-simplyadrian']['domain_component_level_0']}'"
 # Site Name
-default['ad-nativex']['site_name'] = 'AMAZON'
+default['ad-simplyadrian']['site_name'] = 'AMAZON'
 # Safe Mode Password
-default['ad-nativex']['safe_mode_pass'] = 'Passw0rd'
+default['ad-simplyadrian']['safe_mode_pass'] = 'Passw0rd'
 # AD User
-default['ad-nativex']['ad_username'] = 'nil'
+default['ad-simplyadrian']['ad_username'] = 'nil'
 # AD Password
-default['ad-nativex']['ad_password'] = 'nil'
+default['ad-simplyadrian']['ad_password'] = 'nil'

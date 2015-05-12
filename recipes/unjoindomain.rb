@@ -1,13 +1,13 @@
 #
-# Cookbook Name:: ad-nativex
+# Cookbook Name:: ad-simplyadrian
 # Recipe:: unjoindomain
 #
-# Copyright 2014, NativeX
+# Copyright 2014, simplyadrian
 #
 # All rights reserved - Do Not Redistribute
 #
 creds = Chef::EncryptedDataBagItem.load("credentials", "ad")
-domain = node['ad-nativex']['name']
+domain = node['ad-simplyadrian']['name']
 
 if centos?
 
@@ -36,9 +36,9 @@ if centos?
 
 elsif windows?
 
-  # Unjoin teamfreeze.com domain
+  # Unjoin defaultdomain.com domain
   creds = Chef::EncryptedDataBagItem.load("credentials", "ad")
-  ad_nativex_domain "#{node['ad-nativex']['name']}" do
+  ad_simplyadrian_domain "#{node['ad-simplyadrian']['name']}" do
     action :unjoin
     retries 3
     retry_delay 60

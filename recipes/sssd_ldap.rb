@@ -1,9 +1,9 @@
 #
-# Cookbook Name:: ad-nativex
+# Cookbook Name:: ad-simplyadrian
 # Recipe:: sssd_ldap
 #
 # Copyright 2013-2014, Limelight Networks, Inc.
-# Used under the Apache License, Version 2.0. Modified for NativeX, 2015
+# Used under the Apache License, Version 2.0. Modified for simplyadrian, 2015
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -20,7 +20,7 @@ package 'libsss-sudo' do
                )
 
   action :install
-  only_if { platform_family?('debian') && node['ad-nativex']['sssd_ldap']['ldap_sudo'] }
+  only_if { platform_family?('debian') && node['ad-simplyadrian']['sssd_ldap']['ldap_sudo'] }
 end
 
 # Only run on RHEL
@@ -35,7 +35,7 @@ if platform_family?('rhel')
       edit = Chef::Util::FileEdit.new '/etc/nsswitch.conf'
       edit.insert_line_if_no_match(/^sudoers:/, 'sudoers: files')
 
-      if node['ad-nativex']['sssd_ldap']['ldap_sudo']
+      if node['ad-simplyadrian']['sssd_ldap']['ldap_sudo']
         # Add sss to the line if it's not there.
         edit.search_file_replace(/^sudoers:([ \t]*(?!sss\b)\w+)*[ \t]*$/, '\0 sss')
       else
@@ -51,7 +51,7 @@ if platform_family?('rhel')
 
   # Have authconfig enable SSSD in the pam files
   execute 'authconfig' do
-    command "authconfig #{node['ad-nativex']['sssd_ldap']['authconfig_params']}"
+    command "authconfig #{node['ad-simplyadrian']['sssd_ldap']['authconfig_params']}"
     notifies :run, 'ruby_block[nsswitch sudoers]', :immediately
     action :nothing
   end
