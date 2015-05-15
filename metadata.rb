@@ -1,4 +1,4 @@
-name             'ad'
+name             'ad-simplyadrian'
 maintainer       'simplyadrian'
 maintainer_email 'simplyadrian@gmail.com'
 license          'All rights reserved'
